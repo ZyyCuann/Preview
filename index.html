@@ -159,14 +159,19 @@
 
     <!-- Utilities Right -->
     <div class="flex items-center gap-2">
+      <button onclick="toggleLanguage()" id="langToggleBtn" class="text-xs font-extrabold px-3 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl border border-amber-300 shadow-xs flex items-center gap-1.5 transition">
+        <i data-lucide="globe" class="w-3.5 h-3.5 text-slate-950"></i>
+        <span id="langBtnText">🌐 English: EN</span>
+      </button>
+
       <button onclick="toggleGuidance()" id="guidanceToggleBtn" class="text-xs font-bold px-3 py-1 bg-emerald-50 text-gojek-green border border-gojek-mintBorder rounded-xl flex items-center gap-1.5 transition hover:bg-emerald-100">
         <span id="guidanceDot" class="w-2 h-2 rounded-full bg-gojek-green animate-pulse"></span>
-        <span class="hidden sm:inline">Petunjuk Interaksi:</span> <strong id="guidanceStatusText">ON</strong>
+        <span id="guidanceLabel" class="hidden sm:inline">Petunjuk Interaksi:</span> <strong id="guidanceStatusText">ON</strong>
       </button>
 
       <button onclick="resetAppState()" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl border border-slate-200 transition flex items-center gap-1">
         <i data-lucide="rotate-ccw" class="w-3 h-3 text-slate-500"></i>
-        <span>Reset</span>
+        <span id="resetBtnLabel">Reset</span>
       </button>
     </div>
   </header>
@@ -493,6 +498,7 @@
       balanceHidden: false,
       autoPlay: false,
       autoPlayTimer: null,
+      lang: 'id', // 'id' | 'en'
       
       // Mini Game State
       gameLetters: ['H', 'E', 'M', 'A', 'T'],
@@ -501,6 +507,16 @@
     };
 
     const InitialState = JSON.parse(JSON.stringify(AppState));
+
+    function t(idText, enText) {
+      return AppState.lang === 'en' ? enText : idText;
+    }
+
+    function toggleLanguage() {
+      AppState.lang = AppState.lang === 'en' ? 'id' : 'en';
+      showToast(AppState.lang === 'en' ? "Language changed to English 🇬🇧" : "Bahasa diubah ke Indonesia 🇮🇩", "success");
+      renderApp();
+    }
 
     function formatIDR(amount) {
       return 'Rp ' + Math.max(0, Math.floor(amount)).toLocaleString('id-ID');
@@ -540,14 +556,14 @@
         btnDesk.className = 'px-3 py-1 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-white text-slate-900 shadow-xs border border-slate-200';
         btnMob.className = 'px-3 py-1 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
         chassis.className = 'phone-frame flex flex-col select-none relative mx-auto transition-all';
-        showToast("Tampilan Mode Desktop Showcase (3-Kolom)", "success");
+        showToast(t("Tampilan Mode Desktop Showcase (3-Kolom)", "Desktop Showcase Mode View (3-Column)"), "success");
       } else {
         left.classList.add('hidden');
         right.classList.add('hidden');
         btnMob.className = 'px-3 py-1 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-white text-slate-900 shadow-xs border border-slate-200';
         btnDesk.className = 'px-3 py-1 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
         chassis.className = 'phone-frame-fullscreen flex flex-col select-none relative mx-auto transition-all';
-        showToast("Tampilan Mode Standalone Mobile HP", "success");
+        showToast(t("Tampilan Mode Standalone Mobile HP", "Standalone Mobile View Mode"), "success");
       }
     }
 
@@ -561,19 +577,19 @@
         dot.className = 'w-2 h-2 rounded-full bg-gojek-green animate-pulse';
         text.innerText = 'ON';
         btn.className = 'text-xs font-bold px-3 py-1 bg-emerald-50 text-gojek-green border border-gojek-mintBorder rounded-xl flex items-center gap-1.5 transition hover:bg-emerald-100';
-        showToast("Petunjuk Interaksi Diaktifkan", "success");
+        showToast(t("Petunjuk Interaksi Diaktifkan", "Interaction Guidance Enabled"), "success");
       } else {
         dot.className = 'w-2 h-2 rounded-full bg-slate-400';
         text.innerText = 'OFF';
         btn.className = 'text-xs font-bold px-3 py-1 bg-slate-100 text-slate-500 border border-slate-200 rounded-xl flex items-center gap-1.5 transition hover:bg-slate-200';
-        showToast("Petunjuk Interaksi Dimatikan", "success");
+        showToast(t("Petunjuk Interaksi Dimatikan", "Interaction Guidance Disabled"), "success");
       }
       renderApp();
     }
 
     function resetAppState() {
       AppState = JSON.parse(JSON.stringify(InitialState));
-      showToast("Demo state telah dikembalikan ke awal", "success");
+      showToast(t("Demo state telah dikembalikan ke awal", "Demo state reset to default"), "success");
       renderApp();
     }
 
@@ -593,12 +609,12 @@
     function toggleAutoPlay() {
       AppState.autoPlay = !AppState.autoPlay;
       if (AppState.autoPlay) {
-        showToast("Auto-Play Walkthrough Diaktifkan (3 detik)", "success");
+        showToast(t("Auto-Play Walkthrough Diaktifkan (3 detik)", "Auto-Play Walkthrough Enabled (3s)"), "success");
         AppState.autoPlayTimer = setInterval(advanceAutoPlayStep, 3000);
       } else {
         clearInterval(AppState.autoPlayTimer);
         AppState.autoPlayTimer = null;
-        showToast("Auto-Play Walkthrough Dimatikan", "success");
+        showToast(t("Auto-Play Walkthrough Dimatikan", "Auto-Play Walkthrough Disabled"), "success");
       }
       renderApp();
     }
@@ -621,83 +637,129 @@
       navigateTo(screenOrder[nextIdx]);
     }
 
-    const StepMetaData = {
-      'gostudent_home': {
-        badge: '1',
-        title: 'Gojek Superapp Discovery',
-        subtitle: 'gostudent_home',
-        explanation: 'Pengguna menemukan banner GoStudent di beranda Gojek superapp dengan saldo GoPay Rp 169.742.',
-        mascotSpeech: 'Yuk, klik "Coba Sekarang" untuk mulai kelola keuangan mahasiswa!',
-        hotspotTarget: 'banner-cta'
-      },
-      'gostudent_profile': {
-        badge: '2',
-        title: 'Student Profile Onboarding',
-        subtitle: 'gostudent_profile',
-        explanation: 'Pengguna mengisi status mahasiswa dan menggeser budget bulanan untuk melihat simulasi 3R (50:30:20).',
-        mascotSpeech: 'Geser slider budget bulananmu untuk melihat pembagian rasio 3R!',
-        hotspotTarget: 'budget-slider'
-      },
-      'gostudent_fund': {
-        badge: '3',
-        title: 'R1 Raise - Transfer Calculator',
-        subtitle: 'gostudent_fund',
-        explanation: 'Pengguna memindahkan saldo GoPay Utama ke GoStudent. Kalkulator instan membagi nominal 50% Needs, 30% Wants, 20% Invest.',
-        mascotSpeech: 'Ketik nominal transfer dan tekan "Pindahkan & Bagi Saldo"!',
-        hotspotTarget: 'confirm-transfer'
-      },
-      'gostudent_dashboard': {
-        badge: '4',
-        title: 'R2 Retain - Pocket Hub',
-        subtitle: 'gostudent_dashboard',
-        explanation: 'Hub utama 3 Kantong Keuangan. Pengguna dapat menguji pengeluaran kantin atau kopi secara real-time.',
-        mascotSpeech: 'Coba tekan "-Rp 20.000 Makan Kantin" untuk melihat saldo kantong terpotong!',
-        hotspotTarget: 'spend-needs'
-      },
-      'gostudent_reallocate': {
-        badge: '5',
-        title: 'R3 Reallocate & Consistency',
-        subtitle: 'gostudent_reallocate',
-        explanation: 'Evaluasi kebiasaan bulanan. Pengguna memperoleh multiplier 2x poin dan klaim bonus konsistensi.',
-        mascotSpeech: 'Selamat! Tekan "Klaim Bonus Poin (+400 Pts)" untuk mengambil poinmu!',
-        hotspotTarget: 'claim-bonus'
-      },
-      'gostudent_rewards': {
-        badge: '6',
-        title: 'Redeem & Rewards Center',
-        subtitle: 'gostudent_rewards',
-        explanation: 'Poin dapat ditukarkan dengan Voucher GoFood atau GoRide Kampus dengan barcode bottom sheet.',
-        mascotSpeech: 'Tekan "Tukar Poin" untuk mendapatkan barcode voucher diskon!',
-        hotspotTarget: 'redeem-voucher'
-      },
-      'champoint_hub': {
-        badge: 'A',
-        title: 'Champointship Mission Hub',
-        subtitle: 'champoint_hub',
-        explanation: 'Hub kompetisi antar kampus Gojek School Champointship 2026 di Universitas Indonesia.',
-        mascotSpeech: 'Mainkan mini-game "Tata Kata" di bawah untuk bonus +20 poin!',
-        hotspotTarget: 'play-game'
-      },
-      'champoint_game': {
-        badge: 'B',
-        title: 'Mini-Game Tata Kata Edukasi',
-        subtitle: 'champoint_game',
-        explanation: 'Asah otak finansial interaktif. Susun ubin huruf H-E-M-A-T untuk mendapatkan bonus poin.',
-        mascotSpeech: 'Klik ubin H - E - M - A - T secara berurutan lalu kirim jawaban!',
-        hotspotTarget: 'tile-H'
-      },
-      'champoint_leaderboard': {
-        badge: 'C',
-        title: 'Leaderboard Nasional Kampus',
-        subtitle: 'champoint_leaderboard',
-        explanation: 'Klasemen nasional posisi mahasiswa terbaik. Pengguna berada di Peringkat #12 Universitas Indonesia.',
-        mascotSpeech: 'Klik "Bagikan ke Instagram Story" untuk pamer pencapaian kampusmu!',
-        hotspotTarget: 'share-story'
-      }
-    };
+    function getStepMetaData(screenId) {
+      const isEn = AppState.lang === 'en';
+      const dict = {
+        'gostudent_home': {
+          badge: '1',
+          title: 'Gojek Superapp Discovery',
+          subtitle: 'gostudent_home',
+          explanation: isEn 
+            ? 'User discovers GoStudent banner on Gojek superapp home with GoPay balance Rp 169,742.' 
+            : 'Pengguna menemukan banner GoStudent di beranda Gojek superapp dengan saldo GoPay Rp 169.742.',
+          mascotSpeech: isEn 
+            ? 'Come on, click "Try Now" to start managing student finances!' 
+            : 'Yuk, klik "Coba Sekarang" untuk mulai kelola keuangan mahasiswa!',
+          hotspotTarget: 'banner-cta'
+        },
+        'gostudent_profile': {
+          badge: '2',
+          title: 'Student Profile Onboarding',
+          subtitle: 'gostudent_profile',
+          explanation: isEn 
+            ? 'User fills student status and adjusts monthly budget slider to view 3R simulation (50:30:20).' 
+            : 'Pengguna mengisi status mahasiswa dan menggeser budget bulanan untuk melihat simulasi 3R (50:30:20).',
+          mascotSpeech: isEn 
+            ? 'Drag your monthly budget slider to see your 3R ratio split!' 
+            : 'Geser slider budget bulananmu untuk melihat pembagian rasio 3R!',
+          hotspotTarget: 'budget-slider'
+        },
+        'gostudent_fund': {
+          badge: '3',
+          title: 'R1 Raise - Transfer Calculator',
+          subtitle: 'gostudent_fund',
+          explanation: isEn 
+            ? 'User transfers Main GoPay balance to GoStudent. Instant calculator splits nominal into 50% Needs, 30% Wants, 20% Invest.' 
+            : 'Pengguna memindahkan saldo GoPay Utama ke GoStudent. Kalkulator instan membagi nominal 50% Needs, 30% Wants, 20% Invest.',
+          mascotSpeech: isEn 
+            ? 'Enter transfer amount and tap "Transfer & Split Balance"!' 
+            : 'Ketik nominal transfer dan tekan "Pindahkan & Bagi Saldo"!',
+          hotspotTarget: 'confirm-transfer'
+        },
+        'gostudent_dashboard': {
+          badge: '4',
+          title: 'R2 Retain - Pocket Hub',
+          subtitle: 'gostudent_dashboard',
+          explanation: isEn 
+            ? 'Main hub for 3 Financial Pockets. User can test canteen spending or coffee in real-time.' 
+            : 'Hub utama 3 Kantong Keuangan. Pengguna dapat menguji pengeluaran kantin atau kopi secara real-time.',
+          mascotSpeech: isEn 
+            ? 'Try tapping "-Rp 20,000 Canteen Meal" to see pocket balance deducted!' 
+            : 'Coba tekan "-Rp 20.000 Makan Kantin" untuk melihat saldo kantong terpotong!',
+          hotspotTarget: 'spend-needs'
+        },
+        'gostudent_reallocate': {
+          badge: '5',
+          title: 'R3 Reallocate & Consistency',
+          subtitle: 'gostudent_reallocate',
+          explanation: isEn 
+            ? 'Monthly habit evaluation. User earns 2x points multiplier and claims consistency bonus.' 
+            : 'Evaluasi kebiasaan bulanan. Pengguna memperoleh multiplier 2x poin dan klaim bonus konsistensi.',
+          mascotSpeech: isEn 
+            ? 'Congratulations! Tap "Claim Bonus Points (+400 Pts)" to collect your points!' 
+            : 'Selamat! Tekan "Klaim Bonus Poin (+400 Pts)" untuk mengambil poinmu!',
+          hotspotTarget: 'claim-bonus'
+        },
+        'gostudent_rewards': {
+          badge: '6',
+          title: 'Redeem & Rewards Center',
+          subtitle: 'gostudent_rewards',
+          explanation: isEn 
+            ? 'Points can be redeemed for GoFood or Campus GoRide Vouchers with bottom sheet barcodes.' 
+            : 'Poin dapat ditukarkan dengan Voucher GoFood atau GoRide Kampus dengan barcode bottom sheet.',
+          mascotSpeech: isEn 
+            ? 'Tap "Redeem Points" to get your discount voucher barcode!' 
+            : 'Tekan "Tukar Poin" untuk mendapatkan barcode voucher diskon!',
+          hotspotTarget: 'redeem-voucher'
+        },
+        'champoint_hub': {
+          badge: 'A',
+          title: 'Champointship Mission Hub',
+          subtitle: 'champoint_hub',
+          explanation: isEn 
+            ? 'Inter-campus competition hub for Gojek School Champointship 2026 at Universitas Indonesia.' 
+            : 'Hub kompetisi antar kampus Gojek School Champointship 2026 di Universitas Indonesia.',
+          mascotSpeech: isEn 
+            ? 'Play the "Word Scramble" mini-game below for a +20 points bonus!' 
+            : 'Mainkan mini-game "Tata Kata" di bawah untuk bonus +20 poin!',
+          hotspotTarget: 'play-game'
+        },
+        'champoint_game': {
+          badge: 'B',
+          title: isEn ? 'Financial Word Scramble Game' : 'Mini-Game Tata Kata Edukasi',
+          subtitle: 'champoint_game',
+          explanation: isEn 
+            ? 'Interactive financial brain teaser. Spell H-E-M-A-T to earn bonus points.' 
+            : 'Asah otak finansial interaktif. Susun ubin huruf H-E-M-A-T untuk mendapatkan bonus poin.',
+          mascotSpeech: isEn 
+            ? 'Click H - E - M - A - T tiles in sequence then submit answer!' 
+            : 'Klik ubin H - E - M - A - T secara berurutan lalu kirim jawaban!',
+          hotspotTarget: 'tile-H'
+        },
+        'champoint_leaderboard': {
+          badge: 'C',
+          title: isEn ? 'Campus National Leaderboard' : 'Leaderboard Nasional Kampus',
+          subtitle: 'champoint_leaderboard',
+          explanation: isEn 
+            ? 'National standings of top students. User is currently at Rank #12 Universitas Indonesia.' 
+            : 'Klasemen nasional posisi mahasiswa terbaik. Pengguna berada di Peringkat #12 Universitas Indonesia.',
+          mascotSpeech: isEn 
+            ? 'Click "Share to Instagram Story" to showcase your campus achievement!' 
+            : 'Klik "Bagikan ke Instagram Story" untuk pamer pencapaian kampusmu!',
+          hotspotTarget: 'share-story'
+        }
+      };
+      return dict[screenId] || dict['gostudent_home'];
+    }
 
     function renderApp() {
       const isGoStudent = AppState.activeTrack === 'gostudent';
+
+      // Update Language Switcher Button Text
+      const langBtnText = document.getElementById('langBtnText');
+      if (langBtnText) {
+        langBtnText.innerText = AppState.lang === 'en' ? '🌐 Bahasa: ID' : '🌐 English: EN';
+      }
       
       // Update Left Panel Selectors
       document.getElementById('trackBtnGoStudent').className = `py-2 px-2.5 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-1.5 ${
@@ -711,7 +773,7 @@
       document.getElementById('stepperChampoint').className = !isGoStudent ? 'flex flex-col gap-1.5 overflow-y-auto no-scrollbar pr-0.5' : 'hidden';
 
       // Update Step Metadata & Jury Explanation
-      const meta = StepMetaData[AppState.activeScreen] || StepMetaData['gostudent_home'];
+      const meta = getStepMetaData(AppState.activeScreen);
       document.getElementById('juryStepBadge').innerText = meta.badge;
       document.getElementById('juryStepTitle').innerText = meta.title;
       document.getElementById('juryScreenCode').innerText = meta.subtitle;
@@ -724,11 +786,11 @@
       const autoIcon = document.getElementById('autoPlayIcon');
       if (AppState.autoPlay) {
         autoBadge.classList.remove('hidden');
-        autoText.innerText = "Pause Walkthrough";
+        autoText.innerText = t("Pause Walkthrough", "Pause Walkthrough");
         autoIcon.setAttribute('data-lucide', 'pause');
       } else {
         autoBadge.classList.add('hidden');
-        autoText.innerText = "Jalankan Auto Walkthrough (3s)";
+        autoText.innerText = t("Jalankan Auto Walkthrough (3s)", "Run Auto Walkthrough (3s)");
         autoIcon.setAttribute('data-lucide', 'play');
       }
 
@@ -746,7 +808,7 @@
       document.getElementById('inspectGopay').innerText = formatIDR(AppState.gopayMainBalance);
       document.getElementById('inspectGoStudent').innerText = formatIDR(AppState.goStudentTotal);
       document.getElementById('inspectPoints').innerText = AppState.campaign.points + ' Pts';
-      document.getElementById('inspectStreak').innerText = AppState.campaign.streakDays + ' Hari';
+      document.getElementById('inspectStreak').innerText = AppState.campaign.streakDays + t(' Hari', ' Days');
       document.getElementById('inspectNeeds').innerText = formatIDR(AppState.pockets.needs.balance);
       document.getElementById('inspectWants').innerText = formatIDR(AppState.pockets.wants.balance);
       document.getElementById('inspectInvest').innerText = formatIDR(AppState.pockets.invest.balance);
@@ -1784,7 +1846,7 @@
 
       if (AppState.transferSource === 'gopay') {
         if (amt > AppState.gopayMainBalance) {
-          showToast("Saldo GoPay tidak mencukupi!", "error");
+          showToast(t("Saldo GoPay tidak mencukupi!", "Insufficient GoPay balance!"), "error");
           return;
         }
         AppState.gopayMainBalance -= amt;
@@ -1799,9 +1861,9 @@
       if (m2 && !m2.done) {
         m2.done = true;
         AppState.campaign.points += m2.reward;
-        showToast(`Misi Mingguan Selesai! +${m2.reward} Poin Bonus!`, 'success');
+        showToast(t(`Misi Mingguan Selesai! +${m2.reward} Poin Bonus!`, `Weekly Mission Completed! +${m2.reward} Bonus Points!`), 'success');
       } else {
-        showToast(`Berhasil memindahkan ${formatIDR(amt)} ke GoStudent`, 'success');
+        showToast(t(`Berhasil memindahkan ${formatIDR(amt)} ke GoStudent`, `Successfully transferred ${formatIDR(amt)} to GoStudent`), 'success');
       }
 
       navigateTo('gostudent_dashboard');
@@ -1818,9 +1880,9 @@
         p.balance -= amount;
         p.spent += amount;
         AppState.goStudentTotal -= amount;
-        showToast(`Pengeluaran ${itemName} (${formatIDR(amount)}) dicatat`, 'success');
+        showToast(t(`Pengeluaran ${itemName} (${formatIDR(amount)}) dicatat`, `Recorded expense ${itemName} (${formatIDR(amount)})`), 'success');
       } else {
-        showToast(`Saldo ${p.label} tidak mencukupi`, 'error');
+        showToast(t(`Saldo ${p.label} tidak mencukupi`, `Insufficient balance in ${p.label}`), 'error');
       }
       renderApp();
     }
@@ -1828,7 +1890,7 @@
     function simulateTopUpInvestment(amount) {
       AppState.pockets.invest.balance += amount;
       AppState.goStudentTotal += amount;
-      showToast(`Berhasil setor celengan ${formatIDR(amount)}`, 'success');
+      showToast(t(`Berhasil setor celengan ${formatIDR(amount)}`, `Successfully saved ${formatIDR(amount)} into investment`), 'success');
       renderApp();
     }
 
@@ -1838,7 +1900,7 @@
       AppState.campaign.points += 400;
 
       confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-      showToast("Selamat! +400 Poin Konsistensi Diklaim!", "success");
+      showToast(t("Selamat! +400 Poin Konsistensi Diklaim!", "Congratulations! +400 Consistency Points Claimed!"), "success");
       renderApp();
     }
 
@@ -1848,7 +1910,7 @@
         const v = AppState.campaign.vouchers.find(item => item.id === vId);
         if (v) v.claimed = true;
 
-        showToast(`Voucher ${title} Ditukarkan!`, 'success');
+        showToast(t(`Voucher ${title} Ditukarkan!`, `Voucher ${title} Redeemed!`), 'success');
 
         openModal(`
           <div class="flex flex-col items-center text-center gap-3">
@@ -1856,7 +1918,7 @@
               <i data-lucide="ticket" class="w-6 h-6"></i>
             </div>
             <h3 class="font-extrabold text-base text-slate-900">${title}</h3>
-            <p class="text-xs text-slate-500">Tunjukkan barcode ini kepada kasir / driver Gojek.</p>
+            <p class="text-xs text-slate-500">${t('Tunjukkan barcode ini kepada kasir / driver Gojek.', 'Show this barcode to the cashier or Gojek driver.')}</p>
 
             <div class="w-full bg-slate-900 p-4 rounded-2xl flex flex-col items-center gap-2 my-1">
               <div class="flex gap-1 h-12 items-center">
@@ -1866,12 +1928,12 @@
             </div>
 
             <button onclick="closeModal()" class="w-full py-2.5 bg-gojek-green text-white font-extrabold text-xs rounded-xl">
-              Tutup & Simpan di Promo
+              ${t('Tutup & Simpan di Promo', 'Close & Save in Promos')}
             </button>
           </div>
         `);
       } else {
-        showToast("Poin kamu tidak mencukupi!", "error");
+        showToast(t("Poin kamu tidak mencukupi!", "Insufficient points!"), "error");
       }
       renderApp();
     }
@@ -1881,7 +1943,7 @@
       if (m && !m.done) {
         m.done = true;
         AppState.campaign.points += m.reward;
-        showToast(`Misi "${m.title}" Selesai! +${m.reward} Poin!`, 'success');
+        showToast(t(`Misi "${m.title}" Selesai! +${m.reward} Poin!`, `Mission "${m.title}" Completed! +${m.reward} Points!`), 'success');
         renderApp();
       }
     }
@@ -1905,9 +1967,9 @@
         AppState.gameSolved = true;
         AppState.campaign.points += 20;
         confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
-        showToast("Jawaban Benar! Kamu dapat +20 Poin!", "success");
+        showToast(t("Jawaban Benar! Kamu dapat +20 Poin!", "Correct Answer! You earned +20 Points!"), "success");
       } else {
-        showToast("Jawaban kurang tepat. Coba susun H-E-M-A-T", "error");
+        showToast(t("Jawaban kurang tepat. Coba susun H-E-M-A-T", "Incorrect answer. Try arranging H-E-M-A-T"), "error");
       }
       renderApp();
     }
@@ -1927,15 +1989,15 @@
         <div class="flex flex-col text-left gap-3">
           <div class="flex items-center gap-2">
             <i data-lucide="award" class="w-5 h-5 text-amber-500"></i>
-            <h3 class="font-extrabold text-sm text-slate-900">Syarat Campus Ambassador 2026</h3>
+            <h3 class="font-extrabold text-sm text-slate-900">${t('Syarat Campus Ambassador 2026', 'Campus Ambassador Requirements 2026')}</h3>
           </div>
           <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
-            <li>Mahasiswa aktif D3/D4/S1 di Indonesia.</li>
-            <li>Masuk Top 3 Leaderboard Gojek Champointship.</li>
-            <li>Memiliki rasio konsistensi 3R min 85%.</li>
+            <li>${t('Mahasiswa aktif D3/D4/S1 di Indonesia.', 'Active undergraduate / diploma student in Indonesia.')}</li>
+            <li>${t('Masuk Top 3 Leaderboard Gojek Champointship.', 'Rank in Top 3 of Gojek Champointship Leaderboard.')}</li>
+            <li>${t('Memiliki rasio konsistensi 3R min 85%.', 'Maintain 3R consistency ratio of min 85%.')}</li>
           </ul>
           <button onclick="closeModal()" class="mt-2 w-full py-2.5 bg-gojek-green text-white font-extrabold text-xs rounded-xl">
-            Mengerti
+            ${t('Mengerti', 'Got It')}
           </button>
         </div>
       `);
@@ -1946,12 +2008,12 @@
         <div class="flex flex-col items-center text-center gap-3">
           <div class="w-full bg-gradient-to-tr from-purple-600 via-pink-600 to-amber-500 p-4 rounded-2xl text-white shadow-md flex flex-col gap-2">
             <span class="text-[10px] font-bold uppercase tracking-wider opacity-80">Gojek Champointship 2026</span>
-            <h4 class="font-black text-sm">Peringkat #12 Nasional</h4>
+            <h4 class="font-black text-sm">${t('Peringkat #12 Nasional', 'National Rank #12')}</h4>
             <p class="text-xs">Universitas Indonesia • ${AppState.campaign.points} Pts</p>
           </div>
-          <p class="text-xs text-slate-500">Preview untuk dibagikan ke Instagram Story.</p>
-          <button onclick="showToast('Story berhasil dibagikan!', 'success'); closeModal();" class="w-full py-2.5 bg-slate-900 text-white font-extrabold text-xs rounded-xl">
-            Bagikan Sekarang
+          <p class="text-xs text-slate-500">${t('Preview untuk dibagikan ke Instagram Story.', 'Preview to share on Instagram Story.')}</p>
+          <button onclick="showToast(t('Story berhasil dibagikan!', 'Story shared successfully!'), 'success'); closeModal();" class="w-full py-2.5 bg-slate-900 text-white font-extrabold text-xs rounded-xl">
+            ${t('Bagikan Sekarang', 'Share Now')}
           </button>
         </div>
       `);
