@@ -752,6 +752,8 @@
       return dict[screenId] || dict['gostudent_home'];
     }
 
+    const StepMetaData = new Proxy({}, { get: (_, screenId) => getStepMetaData(screenId) });
+
     function renderApp() {
       const isGoStudent = AppState.activeTrack === 'gostudent';
 
@@ -822,7 +824,7 @@
 
     function getHotspotClass(targetId) {
       if (!AppState.guidanceEnabled) return '';
-      const meta = StepMetaData[AppState.activeScreen];
+      const meta = getStepMetaData(AppState.activeScreen);
       if (meta && meta.hotspotTarget === targetId) {
         return 'hotspot-pulse';
       }
