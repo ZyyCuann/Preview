@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoStudent & Gojek Champointship - Official Showcase</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            gojek: {
+              green: '#00AA13',
+              darkGreen: '#00880D',
+              mint: '#EDFCF2',
+              softMint: '#F0FAF2',
+              mintBorder: '#D1F2D9',
+              bgLight: '#F0FAF4'
+            },
+            gopay: {
+              cyan: '#00AED6',
+              darkBlue: '#0288D1',
+              cyanTint: '#EBF8FA',
+              cyanBorder: '#BAE6FD'
+            },
+            champoint: {
+              gold: '#F7B731',
+              amber: '#F59E0B',
+              warmLight: '#FFFBEB',
+              warmBorder: '#FDE68A'
+            }
+          },
+          boxShadow: {
+            'gojek-card': '0 2px 12px rgba(0, 170, 19, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03)',
+            'phone': '0 25px 50px -12px rgba(0, 170, 19, 0.18), 0 0 0 8px #0f172a, 0 0 0 10px #334155'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Scrollbar behavior */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Dot grid background */
+    .bg-dot-pattern {
+      background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+      background-size: 20px 20px;
+    }
+
+    /* Screen transition animation */
+    .screen-fade-enter {
+      animation: screenFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes screenFadeIn {
+      from { opacity: 0; transform: translateY(6px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* EHN-Apps Presentation Layout & Phone Shell */
+    .phone-shell {
+      width: min(100%, 410px);
+      margin: 0 auto;
+      padding: 10px;
+      border-radius: 44px;
+      background: #0f172a;
+      box-shadow: 0 34px 90px rgba(15, 23, 42, 0.25);
+    }
+
+    .phone-frame {
+      height: 800px;
+      width: 100%;
+      border-radius: 35px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .phone-frame-fullscreen {
+      height: 840px;
+      width: min(100%, 430px);
+      border-radius: 38px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Pulse Hotspot Beacon */
+    .hotspot-pulse {
+      position: relative;
+    }
+    .hotspot-pulse::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: inherit;
+      background-color: #00AA13;
+      opacity: 0.4;
+      animation: pingBeacon 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+      pointer-events: none;
+    }
+    @keyframes pingBeacon {
+      75%, 100% {
+        transform: scale(1.15);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gojek-bgLight font-sans text-slate-900 min-h-screen bg-dot-pattern flex flex-col antialiased selection:bg-gojek-green selection:text-white overflow-x-hidden">
+
+  <!-- Top App Navigation Header -->
+  <header class="h-14 shrink-0 bg-white border-b border-emerald-100 px-4 md:px-6 flex items-center justify-between shadow-xs z-30">
+    <div class="flex items-center gap-3">
+      <div class="bg-gojek-green px-3 py-1 rounded-xl text-white font-extrabold text-xs flex items-center gap-2 shadow-xs">
+        <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24">
+          <path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zm0 8.74L4.2 7 12 3.47 19.8 7 12 10.74zM4.5 10.5v6.27L12 21l7.5-4.23V10.5L12 14.74l-7.5-4.24z"/>
+        </svg>
+        <span>Gojek GoStudent × Champointship</span>
+      </div>
+      <span class="hidden md:inline text-[11px] text-slate-500 font-semibold">3-Column Executive Jury Showcase</span>
+    </div>
+    
+    <!-- View Mode Switcher (Center Top Bar) -->
+    <div class="bg-slate-100 p-1 rounded-2xl border border-slate-200 flex items-center gap-1">
+      <button id="viewBtnDesktop" onclick="setViewMode('desktop')" class="px-3 py-1 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-white text-slate-900 shadow-xs">
+        <i data-lucide="monitor" class="w-3.5 h-3.5 text-gojek-green"></i>
+        <span>Desktop Showcase</span>
+      </button>
+      <button id="viewBtnMobile" onclick="setViewMode('mobile')" class="px-3 py-1 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5">
+        <i data-lucide="smartphone" class="w-3.5 h-3.5 text-gopay-cyan"></i>
+        <span>Standalone Mobile</span>
+      </button>
+    </div>
+
+    <!-- Utilities Right -->
+    <div class="flex items-center gap-2">
+      <button onclick="toggleGuidance()" id="guidanceToggleBtn" class="text-xs font-bold px-3 py-1 bg-emerald-50 text-gojek-green border border-gojek-mintBorder rounded-xl flex items-center gap-1.5 transition hover:bg-emerald-100">
+        <span id="guidanceDot" class="w-2 h-2 rounded-full bg-gojek-green animate-pulse"></span>
+        <span class="hidden sm:inline">Petunjuk Interaksi:</span> <strong id="guidanceStatusText">ON</strong>
+      </button>
+
+      <button onclick="resetAppState()" class="text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-xl border border-slate-200 transition flex items-center gap-1">
+        <i data-lucide="rotate-ccw" class="w-3 h-3 text-slate-500"></i>
+        <span>Reset</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Viewport Layout (EHN-Apps Showcase Stage Proportions) -->
+  <main class="w-full max-w-[1620px] min-h-[calc(100vh-56px)] mx-auto p-6 grid grid-cols-1 lg:grid-cols-[310px_minmax(390px,430px)_1fr] gap-6 items-start justify-center">
+    
+    <!-- LEFT COLUMN (Demo Control): 310px Grid Width -->
+    <aside id="leftJuryPanel" class="w-full shrink-0 bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-gojek-card border border-emerald-100 flex flex-col gap-4">
+      
+      <!-- Jury Header Card -->
+      <div class="bg-gojek-softMint border border-gojek-mintBorder rounded-2xl p-3.5 flex flex-col gap-1.5 shadow-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-gojek-green bg-white px-2 py-0.5 rounded-md border border-gojek-mintBorder">
+            UNTUK DEMO JURI
+          </span>
+          <span class="text-[10px] text-slate-400 font-bold">100% Interaktif</span>
+        </div>
+        <h2 class="font-extrabold text-xs text-slate-900 leading-snug">
+          UI/UX Prototipe Bisa Diklik Real-Time
+        </h2>
+        <p class="text-[11px] text-slate-600 leading-relaxed font-medium">
+          Pilih skenario di bawah ini untuk melihat navigasi HP secara otomatis dan simulasi kalkulasi 3R.
+        </p>
+      </div>
+
+      <!-- Flow Selector Tabs -->
+      <div class="grid grid-cols-2 gap-1.5 p-1 bg-slate-100 rounded-2xl border border-slate-200/80">
+        <button id="trackBtnGoStudent" onclick="switchTrack('gostudent')" class="py-2 px-2.5 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-1.5 bg-white text-slate-900 shadow-xs border border-slate-200">
+          <i data-lucide="wallet" class="w-3.5 h-3.5 text-gojek-green"></i>
+          GoStudent (3R)
+        </button>
+        <button id="trackBtnChampoint" onclick="switchTrack('champointship')" class="py-2 px-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900">
+          <i data-lucide="trophy" class="w-3.5 h-3.5 text-amber-500"></i>
+          Champointship
+        </button>
+      </div>
+
+      <!-- Stepper List -->
+      <div class="flex-1 min-h-0 flex flex-col">
+        <h3 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-2 flex items-center justify-between">
+          <span>Pilih Langkah Navigasi</span>
+          <span id="autoPlayBadge" class="hidden text-[9px] font-semibold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">
+            Auto 3s
+          </span>
+        </h3>
+        
+        <!-- GoStudent Stepper -->
+        <div id="stepperGoStudent" class="flex flex-col gap-1.5 overflow-y-auto no-scrollbar pr-0.5">
+          <button onclick="navigateTo('gostudent_home')" data-screen="gostudent_home" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between bg-emerald-50 border-gojek-mintBorder text-slate-900">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-gojek-green text-white text-[10px] flex items-center justify-center font-extrabold">1</span>
+              1. Discovery (gostudent_home)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="navigateTo('gostudent_profile')" data-screen="gostudent_profile" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] flex items-center justify-center font-extrabold">2</span>
+              2. Profile Onboarding (gostudent_profile)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="navigateTo('gostudent_fund')" data-screen="gostudent_fund" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] flex items-center justify-center font-extrabold">3</span>
+              3. R1 Raise Transfer (gostudent_fund)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="navigateTo('gostudent_dashboard')" data-screen="gostudent_dashboard" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] flex items-center justify-center font-extrabold">4</span>
+              4. R2 Retain Hub (gostudent_dashboard)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="navigateTo('gostudent_reallocate')" data-screen="gostudent_reallocate" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] flex items-center justify-center font-extrabold">5</span>
+              5. R3 Reallocate Habit (gostudent_reallocate)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="navigateTo('gostudent_rewards')" data-screen="gostudent_rewards" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 text-[10px] flex items-center justify-center font-extrabold">6</span>
+              6. Rewards Center (gostudent_rewards)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+        </div>
+
+        <!-- Champointship Stepper -->
+        <div id="stepperChampoint" class="hidden flex-col gap-1.5 overflow-y-auto no-scrollbar pr-0.5">
+          <button onclick="navigateTo('champoint_hub')" data-screen="champoint_hub" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-amber-500 text-white text-[10px] flex items-center justify-center font-extrabold">A</span>
+              Screen A: Mission Hub (champoint_hub)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="navigateTo('champoint_game')" data-screen="champoint_game" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-amber-500 text-white text-[10px] flex items-center justify-center font-extrabold">B</span>
+              Screen B: Tata Kata Game (champoint_game)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+
+          <button onclick="navigateTo('champoint_leaderboard')" data-screen="champoint_leaderboard" class="step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-amber-500 text-white text-[10px] flex items-center justify-center font-extrabold">C</span>
+              Screen C: Leaderboard (champoint_leaderboard)
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Auto Play Button -->
+      <button id="autoPlayToggleBtn" onclick="toggleAutoPlay()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-extrabold text-xs rounded-2xl border border-slate-200 flex items-center justify-center gap-2 transition shrink-0">
+        <i id="autoPlayIcon" data-lucide="play" class="w-4 h-4 text-gojek-green"></i>
+        <span id="autoPlayText">Jalankan Auto Walkthrough (3s)</span>
+      </button>
+
+    </aside>
+
+    <!-- CENTER STAGE (Phone): EHN-Apps Phone Showcase Shell -->
+    <section id="centerPhoneStage" class="w-full flex items-center justify-center relative">
+      <div class="phone-shell">
+        <!-- iPhone Device Chassis (.phone-frame) -->
+        <div id="phoneChassis" class="phone-frame flex flex-col select-none relative mx-auto transition-all">
+        
+        <!-- Status Bar -->
+        <div class="bg-white text-slate-900 px-6 pt-2.5 pb-1 flex items-center justify-between text-xs font-bold z-30 shrink-0 border-b border-slate-100">
+          <span>09:41</span>
+          
+          <!-- Dynamic Island -->
+          <div class="w-22 h-4.5 bg-black rounded-full flex items-center justify-between px-2 text-[9px]">
+            <span class="w-1.5 h-1.5 rounded-full bg-gojek-green animate-pulse"></span>
+            <span class="text-white text-[8px] font-semibold">GoStudent</span>
+          </div>
+
+          <div class="flex items-center gap-1.5 text-slate-800">
+            <i data-lucide="signal" class="w-3 h-3"></i>
+            <i data-lucide="wifi" class="w-3 h-3"></i>
+            <div class="w-4 h-2 border border-slate-800 rounded-sm p-0.5 flex items-center">
+              <div class="w-full h-full bg-slate-900 rounded-xs"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone App Viewport Container (Internal Screen Scroll Only) -->
+        <div id="phoneViewport" class="w-full h-full flex flex-col overflow-y-auto overflow-x-hidden relative no-scrollbar">
+          <!-- Dynamically Rendered Screen Content -->
+        </div>
+
+        <!-- Home Bar Indicator -->
+        <div class="bg-white py-1.5 flex justify-center items-center shrink-0 z-30 border-t border-slate-100">
+          <div class="w-28 h-1 bg-slate-300 rounded-full"></div>
+        </div>
+
+      </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT COLUMN (Business Process & Logic): Flexible Grid Column -->
+    <aside id="rightMetricsPanel" class="w-full shrink-0 bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-gojek-card border border-emerald-100 flex flex-col gap-4">
+      
+      <!-- Process Header -->
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+        <span class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+          <i data-lucide="cpu" class="w-4 h-4 text-gojek-green"></i> BUSINESS PROCESS & LOGIC
+        </span>
+        <span class="text-[9px] font-bold text-gojek-green bg-emerald-50 px-2 py-0.5 rounded-md border border-gojek-mintBorder">Real-Time</span>
+      </div>
+
+      <!-- Current Step UX Explanation Card -->
+      <div class="bg-gojek-softMint border border-gojek-mintBorder rounded-2xl p-3.5 flex flex-col gap-2 shadow-xs">
+        <div class="flex items-center justify-between">
+          <span id="juryStepBadge" class="w-5 h-5 rounded-lg bg-gojek-green text-white font-black text-xs flex items-center justify-center">1</span>
+          <span id="juryScreenCode" class="text-[10px] font-mono text-slate-500">gostudent_home</span>
+        </div>
+        <h3 id="juryStepTitle" class="font-extrabold text-xs text-slate-900 leading-tight">Gojek Superapp Discovery</h3>
+        <p id="juryStepExplanation" class="text-[11px] text-slate-600 leading-relaxed font-medium">
+          Pengguna menemukan banner GoStudent di beranda Gojek superapp dengan saldo GoPay Rp 169.742.
+        </p>
+      </div>
+
+      <!-- Mascot Narrator Card with Mix-Blend Multiply Solution (No White Box Boundary) -->
+      <div class="bg-gradient-to-br from-gojek-softMint to-white border border-gojek-mintBorder rounded-2xl p-3.5 flex flex-col gap-2 relative overflow-hidden shadow-xs">
+        <div class="flex items-center justify-between z-10">
+          <span class="text-[9px] font-extrabold uppercase tracking-wider text-gojek-green bg-white px-2 py-0.5 rounded-md border border-gojek-mintBorder">
+            Coach Advice
+          </span>
+          <span class="text-[10px] text-slate-400 font-bold">Si Gobi</span>
+        </div>
+
+        <div class="pr-20 z-10">
+          <p id="mascotSpeech" class="text-[11px] text-slate-800 font-semibold leading-snug">
+            Yuk, atur budget bulananmu di GoStudent!
+          </p>
+        </div>
+
+        <!-- Mascot Character Render with Mix-Blend Multiply to Dissolve White Background -->
+        <div class="w-24 h-28 absolute -bottom-3 -right-2 pointer-events-none z-0">
+          <img src="Gemini_Generated_Image_pigesgpigesgpige.jpeg" alt="Gojek Mascot" class="w-full h-full object-contain object-bottom mix-blend-multiply contrast-125" onError="this.src='123.jpeg'; this.onError=null;">
+        </div>
+      </div>
+
+      <!-- Live Reactive Metrics Cards -->
+      <div class="flex flex-col gap-2">
+        <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Live Metrics & State</h4>
+
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="bg-white p-2.5 rounded-2xl border border-slate-200/80 flex flex-col">
+            <span class="text-[10px] text-slate-400 font-medium">GoPay Utama</span>
+            <span id="inspectGopay" class="font-extrabold text-slate-900 mt-0.5">Rp 169.742</span>
+          </div>
+          <div class="bg-white p-2.5 rounded-2xl border border-slate-200/80 flex flex-col">
+            <span class="text-[10px] text-slate-400 font-medium">Total GoStudent</span>
+            <span id="inspectGoStudent" class="font-extrabold text-gojek-green mt-0.5">Rp 0</span>
+          </div>
+          <div class="bg-white p-2.5 rounded-2xl border border-slate-200/80 flex flex-col">
+            <span class="text-[10px] text-slate-400 font-medium">Poin Champoint</span>
+            <span id="inspectPoints" class="font-extrabold text-amber-600 mt-0.5">1.250 Pts</span>
+          </div>
+          <div class="bg-white p-2.5 rounded-2xl border border-slate-200/80 flex flex-col">
+            <span class="text-[10px] text-slate-400 font-medium">Status Streak</span>
+            <span id="inspectStreak" class="font-extrabold text-slate-800 mt-0.5">31 Hari</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-3 rounded-2xl border border-slate-200/80 text-[11px] space-y-1.5">
+          <div class="flex justify-between border-b border-slate-100 pb-1">
+            <span class="text-slate-500">Needs 50% (Makan/Kos):</span>
+            <span id="inspectNeeds" class="font-extrabold text-emerald-600">Rp 0</span>
+          </div>
+          <div class="flex justify-between border-b border-slate-100 pb-1">
+            <span class="text-slate-500">Wants 30% (Kopi/Hiburan):</span>
+            <span id="inspectWants" class="font-extrabold text-purple-600">Rp 0</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">Investment 20% (Tabungan):</span>
+            <span id="inspectInvest" class="font-extrabold text-amber-600">Rp 0</span>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- Bottom Sheet / Barcode Modal Container -->
+  <div id="modalOverlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 hidden flex items-end sm:items-center justify-center p-4 transition-all">
+    <div id="modalContent" class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl transition-all transform translate-y-4">
+      <!-- Dynamic Modal Content -->
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+
+  <!-- REACTIVE STATE ENGINE & UI LOGIC -->
+  <script>
+    // Global App State
+    let AppState = {
+      activeTrack: 'gostudent', // 'gostudent' | 'champointship'
+      activeScreen: 'gostudent_home',
+      viewMode: 'desktop', // 'desktop' | 'mobile'
+      guidanceEnabled: true,
+      
+      // Balances
+      gopayMainBalance: 169742,
+      goStudentTotal: 0,
+      
+      // 3R Pockets
+      pockets: {
+        needs: { label: "Needs (Kebutuhan)", ratio: 0.50, balance: 0, spent: 0 },
+        wants: { label: "Wants (Keinginan)", ratio: 0.30, balance: 0, spent: 0 },
+        invest: { label: "Investment (Tabungan)", ratio: 0.20, balance: 0, spent: 0 }
+      },
+
+      // Onboarding Settings
+      profile: {
+        studentLevel: "Mahasiswa",
+        incomeSource: "Uang Saku Ortu",
+        monthlyBudget: 2000000
+      },
+
+      // Transfer Input State
+      transferInput: 100000,
+      transferSource: 'gopay',
+
+      // Campaign & Booster
+      campaign: {
+        studentId: "Champoint #37749860",
+        campus: "Universitas Indonesia",
+        points: 1250,
+        rank: 12,
+        streakDays: 31,
+        reallocateClaimed: false,
+        missions: [
+          { id: 'm1', type: 'daily', title: "Naik GoRide 5x ke kampus", reward: 10, done: false },
+          { id: 'm2', type: 'weekly', title: "Pindah dana ke GoStudent min. Rp 50.000", reward: 50, done: false },
+          { id: 'm3', type: 'monthly', title: "Hemat & jaga rasio 3R selama sebulan", reward: 400, done: false }
+        ],
+        vouchers: [
+          { id: 'v1', title: "Diskon GoFood Rp 15.000", cost: 150, claimed: false },
+          { id: 'v2', title: "Voucher GoRide Kampus Rp 10.000", cost: 100, claimed: false }
+        ]
+      },
+
+      // UI State
+      balanceHidden: false,
+      autoPlay: false,
+      autoPlayTimer: null,
+      
+      // Mini Game State
+      gameLetters: ['H', 'E', 'M', 'A', 'T'],
+      selectedLetters: [],
+      gameSolved: false
+    };
+
+    const InitialState = JSON.parse(JSON.stringify(AppState));
+
+    function formatIDR(amount) {
+      return 'Rp ' + Math.max(0, Math.floor(amount)).toLocaleString('id-ID');
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto px-4 py-2.5 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2 transition transform translate-y-2 opacity-0 text-white ${
+        type === 'success' ? 'bg-slate-900 border border-emerald-500/50' : 'bg-rose-600 border border-rose-400'
+      }`;
+      toast.innerHTML = `
+        <i data-lucide="${type === 'success' ? 'check-circle-2' : 'alert-circle'}" class="w-4 h-4 text-${type === 'success' ? 'emerald-400' : 'white'}"></i>
+        <span>${message}</span>
+      `;
+      document.getElementById('toastContainer').appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 50);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // View Mode Switcher (Desktop Showcase vs Standalone Mobile)
+    function setViewMode(mode) {
+      AppState.viewMode = mode;
+      const left = document.getElementById('leftJuryPanel');
+      const right = document.getElementById('rightMetricsPanel');
+      const btnDesk = document.getElementById('viewBtnDesktop');
+      const btnMob = document.getElementById('viewBtnMobile');
+      const chassis = document.getElementById('phoneChassis');
+
+      if (mode === 'desktop') {
+        left.classList.remove('hidden');
+        right.classList.remove('hidden');
+        btnDesk.className = 'px-3 py-1 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-white text-slate-900 shadow-xs border border-slate-200';
+        btnMob.className = 'px-3 py-1 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
+        chassis.className = 'phone-frame flex flex-col select-none relative mx-auto transition-all';
+        showToast("Tampilan Mode Desktop Showcase (3-Kolom)", "success");
+      } else {
+        left.classList.add('hidden');
+        right.classList.add('hidden');
+        btnMob.className = 'px-3 py-1 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-white text-slate-900 shadow-xs border border-slate-200';
+        btnDesk.className = 'px-3 py-1 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5';
+        chassis.className = 'phone-frame-fullscreen flex flex-col select-none relative mx-auto transition-all';
+        showToast("Tampilan Mode Standalone Mobile HP", "success");
+      }
+    }
+
+    function toggleGuidance() {
+      AppState.guidanceEnabled = !AppState.guidanceEnabled;
+      const dot = document.getElementById('guidanceDot');
+      const text = document.getElementById('guidanceStatusText');
+      const btn = document.getElementById('guidanceToggleBtn');
+
+      if (AppState.guidanceEnabled) {
+        dot.className = 'w-2 h-2 rounded-full bg-gojek-green animate-pulse';
+        text.innerText = 'ON';
+        btn.className = 'text-xs font-bold px-3 py-1 bg-emerald-50 text-gojek-green border border-gojek-mintBorder rounded-xl flex items-center gap-1.5 transition hover:bg-emerald-100';
+        showToast("Petunjuk Interaksi Diaktifkan", "success");
+      } else {
+        dot.className = 'w-2 h-2 rounded-full bg-slate-400';
+        text.innerText = 'OFF';
+        btn.className = 'text-xs font-bold px-3 py-1 bg-slate-100 text-slate-500 border border-slate-200 rounded-xl flex items-center gap-1.5 transition hover:bg-slate-200';
+        showToast("Petunjuk Interaksi Dimatikan", "success");
+      }
+      renderApp();
+    }
+
+    function resetAppState() {
+      AppState = JSON.parse(JSON.stringify(InitialState));
+      showToast("Demo state telah dikembalikan ke awal", "success");
+      renderApp();
+    }
+
+    function switchTrack(track) {
+      AppState.activeTrack = track;
+      AppState.activeScreen = track === 'gostudent' ? 'gostudent_home' : 'champoint_hub';
+      renderApp();
+    }
+
+    function navigateTo(screenId) {
+      AppState.activeScreen = screenId;
+      if (screenId.startsWith('gostudent')) AppState.activeTrack = 'gostudent';
+      if (screenId.startsWith('champoint')) AppState.activeTrack = 'champointship';
+      renderApp();
+    }
+
+    function toggleAutoPlay() {
+      AppState.autoPlay = !AppState.autoPlay;
+      if (AppState.autoPlay) {
+        showToast("Auto-Play Walkthrough Diaktifkan (3 detik)", "success");
+        AppState.autoPlayTimer = setInterval(advanceAutoPlayStep, 3000);
+      } else {
+        clearInterval(AppState.autoPlayTimer);
+        AppState.autoPlayTimer = null;
+        showToast("Auto-Play Walkthrough Dimatikan", "success");
+      }
+      renderApp();
+    }
+
+    const screenOrder = [
+      'gostudent_home',
+      'gostudent_profile',
+      'gostudent_fund',
+      'gostudent_dashboard',
+      'gostudent_reallocate',
+      'gostudent_rewards',
+      'champoint_hub',
+      'champoint_game',
+      'champoint_leaderboard'
+    ];
+
+    function advanceAutoPlayStep() {
+      const idx = screenOrder.indexOf(AppState.activeScreen);
+      const nextIdx = (idx + 1) % screenOrder.length;
+      navigateTo(screenOrder[nextIdx]);
+    }
+
+    const StepMetaData = {
+      'gostudent_home': {
+        badge: '1',
+        title: 'Gojek Superapp Discovery',
+        subtitle: 'gostudent_home',
+        explanation: 'Pengguna menemukan banner GoStudent di beranda Gojek superapp dengan saldo GoPay Rp 169.742.',
+        mascotSpeech: 'Yuk, klik "Coba Sekarang" untuk mulai kelola keuangan mahasiswa!',
+        hotspotTarget: 'banner-cta'
+      },
+      'gostudent_profile': {
+        badge: '2',
+        title: 'Student Profile Onboarding',
+        subtitle: 'gostudent_profile',
+        explanation: 'Pengguna mengisi status mahasiswa dan menggeser budget bulanan untuk melihat simulasi 3R (50:30:20).',
+        mascotSpeech: 'Geser slider budget bulananmu untuk melihat pembagian rasio 3R!',
+        hotspotTarget: 'budget-slider'
+      },
+      'gostudent_fund': {
+        badge: '3',
+        title: 'R1 Raise - Transfer Calculator',
+        subtitle: 'gostudent_fund',
+        explanation: 'Pengguna memindahkan saldo GoPay Utama ke GoStudent. Kalkulator instan membagi nominal 50% Needs, 30% Wants, 20% Invest.',
+        mascotSpeech: 'Ketik nominal transfer dan tekan "Pindahkan & Bagi Saldo"!',
+        hotspotTarget: 'confirm-transfer'
+      },
+      'gostudent_dashboard': {
+        badge: '4',
+        title: 'R2 Retain - Pocket Hub',
+        subtitle: 'gostudent_dashboard',
+        explanation: 'Hub utama 3 Kantong Keuangan. Pengguna dapat menguji pengeluaran kantin atau kopi secara real-time.',
+        mascotSpeech: 'Coba tekan "-Rp 20.000 Makan Kantin" untuk melihat saldo kantong terpotong!',
+        hotspotTarget: 'spend-needs'
+      },
+      'gostudent_reallocate': {
+        badge: '5',
+        title: 'R3 Reallocate & Consistency',
+        subtitle: 'gostudent_reallocate',
+        explanation: 'Evaluasi kebiasaan bulanan. Pengguna memperoleh multiplier 2x poin dan klaim bonus konsistensi.',
+        mascotSpeech: 'Selamat! Tekan "Klaim Bonus Poin (+400 Pts)" untuk mengambil poinmu!',
+        hotspotTarget: 'claim-bonus'
+      },
+      'gostudent_rewards': {
+        badge: '6',
+        title: 'Redeem & Rewards Center',
+        subtitle: 'gostudent_rewards',
+        explanation: 'Poin dapat ditukarkan dengan Voucher GoFood atau GoRide Kampus dengan barcode bottom sheet.',
+        mascotSpeech: 'Tekan "Tukar Poin" untuk mendapatkan barcode voucher diskon!',
+        hotspotTarget: 'redeem-voucher'
+      },
+      'champoint_hub': {
+        badge: 'A',
+        title: 'Champointship Mission Hub',
+        subtitle: 'champoint_hub',
+        explanation: 'Hub kompetisi antar kampus Gojek School Champointship 2026 di Universitas Indonesia.',
+        mascotSpeech: 'Mainkan mini-game "Tata Kata" di bawah untuk bonus +20 poin!',
+        hotspotTarget: 'play-game'
+      },
+      'champoint_game': {
+        badge: 'B',
+        title: 'Mini-Game Tata Kata Edukasi',
+        subtitle: 'champoint_game',
+        explanation: 'Asah otak finansial interaktif. Susun ubin huruf H-E-M-A-T untuk mendapatkan bonus poin.',
+        mascotSpeech: 'Klik ubin H - E - M - A - T secara berurutan lalu kirim jawaban!',
+        hotspotTarget: 'tile-H'
+      },
+      'champoint_leaderboard': {
+        badge: 'C',
+        title: 'Leaderboard Nasional Kampus',
+        subtitle: 'champoint_leaderboard',
+        explanation: 'Klasemen nasional posisi mahasiswa terbaik. Pengguna berada di Peringkat #12 Universitas Indonesia.',
+        mascotSpeech: 'Klik "Bagikan ke Instagram Story" untuk pamer pencapaian kampusmu!',
+        hotspotTarget: 'share-story'
+      }
+    };
+
+    function renderApp() {
+      const isGoStudent = AppState.activeTrack === 'gostudent';
+      
+      // Update Left Panel Selectors
+      document.getElementById('trackBtnGoStudent').className = `py-2 px-2.5 rounded-xl text-xs font-extrabold transition flex items-center justify-center gap-1.5 ${
+        isGoStudent ? 'bg-white text-slate-900 shadow-xs border border-slate-200' : 'text-slate-600 hover:text-slate-900'
+      }`;
+      document.getElementById('trackBtnChampoint').className = `py-2 px-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+        !isGoStudent ? 'bg-white text-slate-900 shadow-xs border border-slate-200' : 'text-slate-600 hover:text-slate-900'
+      }`;
+
+      document.getElementById('stepperGoStudent').className = isGoStudent ? 'flex flex-col gap-1.5 overflow-y-auto no-scrollbar pr-0.5' : 'hidden';
+      document.getElementById('stepperChampoint').className = !isGoStudent ? 'flex flex-col gap-1.5 overflow-y-auto no-scrollbar pr-0.5' : 'hidden';
+
+      // Update Step Metadata & Jury Explanation
+      const meta = StepMetaData[AppState.activeScreen] || StepMetaData['gostudent_home'];
+      document.getElementById('juryStepBadge').innerText = meta.badge;
+      document.getElementById('juryStepTitle').innerText = meta.title;
+      document.getElementById('juryScreenCode').innerText = meta.subtitle;
+      document.getElementById('juryStepExplanation').innerText = meta.explanation;
+      document.getElementById('mascotSpeech').innerText = meta.mascotSpeech;
+
+      // Update Auto Play Button
+      const autoBadge = document.getElementById('autoPlayBadge');
+      const autoText = document.getElementById('autoPlayText');
+      const autoIcon = document.getElementById('autoPlayIcon');
+      if (AppState.autoPlay) {
+        autoBadge.classList.remove('hidden');
+        autoText.innerText = "Pause Walkthrough";
+        autoIcon.setAttribute('data-lucide', 'pause');
+      } else {
+        autoBadge.classList.add('hidden');
+        autoText.innerText = "Jalankan Auto Walkthrough (3s)";
+        autoIcon.setAttribute('data-lucide', 'play');
+      }
+
+      // Highlight active step button in Left Panel
+      document.querySelectorAll('.step-nav-btn').forEach(btn => {
+        const screen = btn.getAttribute('data-screen');
+        if (screen === AppState.activeScreen) {
+          btn.className = "step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between bg-emerald-50 border-gojek-mintBorder text-slate-900 shadow-xs";
+        } else {
+          btn.className = "step-nav-btn w-full text-left p-2.5 rounded-2xl border text-xs font-semibold transition flex items-center justify-between border-slate-200 text-slate-700 hover:bg-slate-50";
+        }
+      });
+
+      // Update Right Metrics Panel
+      document.getElementById('inspectGopay').innerText = formatIDR(AppState.gopayMainBalance);
+      document.getElementById('inspectGoStudent').innerText = formatIDR(AppState.goStudentTotal);
+      document.getElementById('inspectPoints').innerText = AppState.campaign.points + ' Pts';
+      document.getElementById('inspectStreak').innerText = AppState.campaign.streakDays + ' Hari';
+      document.getElementById('inspectNeeds').innerText = formatIDR(AppState.pockets.needs.balance);
+      document.getElementById('inspectWants').innerText = formatIDR(AppState.pockets.wants.balance);
+      document.getElementById('inspectInvest').innerText = formatIDR(AppState.pockets.invest.balance);
+
+      // Render Phone Router Viewport
+      const viewport = document.getElementById('phoneViewport');
+      viewport.innerHTML = getScreenHTML(AppState.activeScreen);
+      
+      lucide.createIcons();
+    }
+
+    function getHotspotClass(targetId) {
+      if (!AppState.guidanceEnabled) return '';
+      const meta = StepMetaData[AppState.activeScreen];
+      if (meta && meta.hotspotTarget === targetId) {
+        return 'hotspot-pulse';
+      }
+      return '';
+    }
+
+    // SCREEN HTML TEMPLATES (Breathable Mobile Padding px-4 pb-20)
+    function getScreenHTML(screenId) {
+      switch (screenId) {
+        
+        // -------------------------------------------------------------
+        // SCREEN 1: Gojek Superapp Discovery (gostudent_home)
+        // -------------------------------------------------------------
+        case 'gostudent_home':
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-gojek-green px-4 pt-3 pb-5 text-white flex flex-col gap-3 rounded-b-3xl shadow-xs">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex-1 bg-white rounded-full px-3.5 py-2 flex items-center gap-2 text-slate-400 text-xs shadow-inner">
+                    <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
+                    <span class="text-slate-500 font-medium">Cari ayam bakar...</span>
+                  </div>
+                  <button onclick="navigateTo('champoint_hub')" class="bg-amber-400 text-amber-950 font-bold px-3 py-1.5 rounded-full text-[11px] flex items-center gap-1 hover:bg-amber-300 transition shadow-xs">
+                    <svg class="w-3.5 h-3.5 fill-amber-950" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <span>Yuk, join!</span>
+                  </button>
+                  <div class="w-8 h-8 rounded-full bg-emerald-800 text-white font-bold flex items-center justify-center text-xs border border-white/40">
+                    AR
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-3.5 text-slate-900 flex items-center justify-between shadow-gojek-card">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-gopay-cyanTint text-gopay-cyan flex items-center justify-center border border-gopay-cyanBorder">
+                      <i data-lucide="wallet" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <div class="text-[10px] text-slate-500 font-medium flex items-center gap-0.5">
+                        <span class="font-bold text-gopay-cyan">gopay</span>
+                        <i data-lucide="chevron-right" class="w-3 h-3 text-slate-400"></i>
+                      </div>
+                      <div class="text-sm font-extrabold text-slate-900 tracking-tight">
+                        ${formatIDR(AppState.gopayMainBalance)}
+                      </div>
+                      <div class="text-[10px] text-amber-600 font-bold flex items-center gap-1">
+                        <svg class="w-3 h-3 fill-amber-500" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 100 coins
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <button onclick="navigateTo('gostudent_fund')" class="flex flex-col items-center gap-0.5 text-slate-700 hover:text-gojek-green">
+                      <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                        <i data-lucide="plus-circle" class="w-4 h-4 text-gopay-cyan"></i>
+                      </div>
+                      <span class="text-[9px] font-bold">Top Up</span>
+                    </button>
+                    <button class="flex flex-col items-center gap-0.5 text-slate-700">
+                      <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                        <i data-lucide="arrow-up-right" class="w-4 h-4 text-gopay-cyan"></i>
+                      </div>
+                      <span class="text-[9px] font-bold">Bayar</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 flex flex-col gap-4">
+                
+                <!-- Service Grid -->
+                <div class="grid grid-cols-4 gap-3 bg-white p-3.5 rounded-2xl shadow-gojek-card border border-slate-100">
+                  <div class="flex flex-col items-center gap-1 text-center cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-gojek-green flex items-center justify-center border border-gojek-mintBorder relative">
+                      <i data-lucide="bike" class="w-5 h-5"></i>
+                      <span class="absolute -top-1 -right-1 bg-slate-900 text-white text-[8px] font-extrabold px-1 rounded-md">7rb</span>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-700">GoRide</span>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1 text-center cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-gojek-green flex items-center justify-center border border-gojek-mintBorder relative">
+                      <i data-lucide="car" class="w-5 h-5"></i>
+                      <span class="absolute -top-1 -right-1 bg-slate-900 text-white text-[8px] font-extrabold px-1 rounded-md">18rb</span>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-700">GoCar</span>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1 text-center cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-200 relative">
+                      <i data-lucide="utensils" class="w-5 h-5"></i>
+                      <span class="absolute -top-1 -right-1 bg-rose-600 text-white text-[8px] font-extrabold px-1 rounded-md">-50%</span>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-700">GoFood</span>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1 text-center cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-gojek-green flex items-center justify-center border border-gojek-mintBorder">
+                      <i data-lucide="package" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-700">GoSend</span>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1 text-center cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-gopay-cyanTint text-gopay-cyan flex items-center justify-center border border-gopay-cyanBorder">
+                      <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-700">GoMart</span>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1 text-center cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-gopay-darkBlue flex items-center justify-center border border-sky-200">
+                      <i data-lucide="landmark" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-700">GoPay Pinjam</span>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1 text-center cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200">
+                      <i data-lucide="gift" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-700">GOJEK7AN</span>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1 text-center cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-500 flex items-center justify-center border border-slate-200">
+                      <i data-lucide="grid" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-700">Lainnya</span>
+                  </div>
+                </div>
+
+                <!-- Hero Banner with Mix-Blend Multiply Solution (White Rectangular Box Completely Dissolves into Banner) -->
+                <div class="bg-gradient-to-br from-gojek-green to-emerald-800 rounded-3xl p-4 text-white shadow-md relative overflow-hidden flex flex-col gap-2 border border-emerald-600">
+                  <div class="flex items-center gap-2">
+                    <span class="bg-amber-400 text-amber-950 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider">Fitur Baru Pelajar</span>
+                  </div>
+                  
+                  <div class="flex items-start justify-between">
+                    <div>
+                      <h3 class="font-extrabold text-base leading-tight">GoStudent - Kelola Keuanganmu!</h3>
+                      <p class="text-xs text-emerald-100 leading-snug mt-1">Ikuti Gojek School Champointship 2026 & raih beasiswa!</p>
+                    </div>
+
+                    <!-- Organic Standing Mascot Character (Mix-blend multiply dissolves white box background) -->
+                    <div class="w-20 h-24 shrink-0 relative -mb-4 -mr-2 pointer-events-none">
+                      <img src="Gemini_Generated_Image_pigesgpigesgpige.jpeg" alt="Gojek Mascot" class="w-full h-full object-contain mix-blend-multiply filter contrast-125" onError="this.src='123.jpeg'; this.onError=null;">
+                    </div>
+                  </div>
+
+                  <button onclick="navigateTo('gostudent_profile')" class="mt-1 bg-white text-gojek-green font-extrabold text-xs px-4 py-2.5 rounded-xl self-start hover:bg-emerald-50 transition shadow-xs flex items-center gap-1.5 ${getHotspotClass('banner-cta')}">
+                    <span>Coba Sekarang</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  </button>
+                </div>
+
+                <div class="bg-white rounded-2xl p-3.5 border border-amber-200 shadow-gojek-card flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 border border-amber-200">
+                      <i data-lucide="trophy" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-extrabold text-xs text-slate-900">Gojek Champointship 2026</h4>
+                      <p class="text-[11px] text-slate-500">Misi Pelajar Berhadiah MacBook & Coins</p>
+                    </div>
+                  </div>
+                  <button onclick="navigateTo('champoint_hub')" class="text-xs font-bold text-amber-600 bg-amber-50 hover:bg-amber-100 px-3 py-1.5 rounded-xl border border-amber-200 transition shrink-0">
+                    Lihat Misi
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- Bottom Navbar -->
+              <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-2 flex justify-between items-center z-20">
+                <button class="flex flex-col items-center gap-0.5 text-gojek-green font-extrabold">
+                  <i data-lucide="home" class="w-5 h-5"></i>
+                  <span class="text-[9px]">Beranda</span>
+                </button>
+                <button onclick="navigateTo('gostudent_rewards')" class="flex flex-col items-center gap-0.5 text-slate-400 font-medium hover:text-slate-700">
+                  <i data-lucide="ticket" class="w-5 h-5"></i>
+                  <span class="text-[9px]">Promo</span>
+                </button>
+                <button class="flex flex-col items-center gap-0.5 text-slate-400 font-medium hover:text-slate-700">
+                  <i data-lucide="receipt" class="w-5 h-5"></i>
+                  <span class="text-[9px]">Pesanan</span>
+                </button>
+                <button class="flex flex-col items-center gap-0.5 text-slate-400 font-medium hover:text-slate-700">
+                  <i data-lucide="message-square" class="w-5 h-5"></i>
+                  <span class="text-[9px]">Chat</span>
+                </button>
+              </div>
+
+            </div>
+          `;
+
+        // -------------------------------------------------------------
+        // SCREEN 2: Student Profile Onboarding (gostudent_profile)
+        // -------------------------------------------------------------
+        case 'gostudent_profile':
+          const needsEst = AppState.profile.monthlyBudget * 0.50;
+          const wantsEst = AppState.profile.monthlyBudget * 0.30;
+          const investEst = AppState.profile.monthlyBudget * 0.20;
+
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-white px-4 py-3.5 border-b border-slate-200 flex items-center justify-between sticky top-0 z-10">
+                <button onclick="navigateTo('gostudent_home')" class="p-1 rounded-full text-slate-600 hover:bg-slate-100">
+                  <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
+                <span class="font-extrabold text-sm text-slate-900">Profil & Budget Mahasiswa</span>
+                <span class="w-6"></span>
+              </div>
+
+              <div class="p-4 flex flex-col gap-4">
+                
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border border-slate-100 flex flex-col gap-2.5">
+                  <label class="text-xs font-extrabold text-slate-800">Status Pendidikan</label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button onclick="updateProfile('studentLevel', 'SMA/SMK')" class="py-2.5 px-3 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                      AppState.profile.studentLevel === 'SMA/SMK' ? 'bg-emerald-50 border-gojek-green text-gojek-green' : 'border-slate-200 text-slate-600'
+                    }">
+                      ${AppState.profile.studentLevel === 'SMA/SMK' ? '<i data-lucide="check" class="w-4 h-4 text-gojek-green"></i>' : ''}
+                      <span>SMA / SMK</span>
+                    </button>
+                    <button onclick="updateProfile('studentLevel', 'Mahasiswa')" class="py-2.5 px-3 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                      AppState.profile.studentLevel === 'Mahasiswa' ? 'bg-emerald-50 border-gojek-green text-gojek-green' : 'border-slate-200 text-slate-600'
+                    }">
+                      ${AppState.profile.studentLevel === 'Mahasiswa' ? '<i data-lucide="check" class="w-4 h-4 text-gojek-green"></i>' : ''}
+                      <span>Mahasiswa / Kuliah</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border border-slate-100 flex flex-col gap-2.5">
+                  <label class="text-xs font-extrabold text-slate-800">Sumber Dana Utama</label>
+                  <div class="flex flex-wrap gap-2">
+                    <button onclick="updateProfile('incomeSource', 'Uang Saku Ortu')" class="py-2 px-3 rounded-xl border text-xs font-bold transition ${
+                      AppState.profile.incomeSource === 'Uang Saku Ortu' ? 'bg-emerald-50 border-gojek-green text-gojek-green' : 'border-slate-200 text-slate-600'
+                    }">
+                      Uang Saku Ortu
+                    </button>
+                    <button onclick="updateProfile('incomeSource', 'Magang / Part-time')" class="py-2 px-3 rounded-xl border text-xs font-bold transition ${
+                      AppState.profile.incomeSource === 'Magang / Part-time' ? 'bg-emerald-50 border-gojek-green text-gojek-green' : 'border-slate-200 text-slate-600'
+                    }">
+                      Magang / Part-time
+                    </button>
+                    <button onclick="updateProfile('incomeSource', 'Freelance')" class="py-2 px-3 rounded-xl border text-xs font-bold transition ${
+                      AppState.profile.incomeSource === 'Freelance' ? 'bg-emerald-50 border-gojek-green text-gojek-green' : 'border-slate-200 text-slate-600'
+                    }">
+                      Freelance
+                    </button>
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border border-slate-100 flex flex-col gap-3 ${getHotspotClass('budget-slider')}">
+                  <div class="flex items-center justify-between">
+                    <label class="text-xs font-extrabold text-slate-800">Budget Bulanan Kamu</label>
+                    <span class="text-sm font-black text-gojek-green">${formatIDR(AppState.profile.monthlyBudget)}</span>
+                  </div>
+                  <input type="range" min="500000" max="5000000" step="100000" value="${AppState.profile.monthlyBudget}" 
+                    oninput="updateProfileBudget(this.value)" 
+                    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-gojek-green">
+                  <div class="flex justify-between text-[10px] text-slate-400 font-semibold">
+                    <span>Rp 500.000</span>
+                    <span>Rp 5.000.000</span>
+                  </div>
+                </div>
+
+                <div class="bg-gojek-softMint border border-gojek-mintBorder rounded-2xl p-4 shadow-xs flex flex-col gap-3">
+                  <div class="flex items-center justify-between border-b border-gojek-mintBorder pb-2">
+                    <span class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+                      <i data-lucide="pie-chart" class="w-4 h-4 text-gojek-green"></i> Alokasi Rasio 3R (50 : 30 : 20)
+                    </span>
+                    <span class="text-[10px] font-bold text-gojek-green bg-white px-2 py-0.5 rounded-md border border-gojek-mintBorder">Otomatis</span>
+                  </div>
+
+                  <div class="space-y-2.5 text-xs">
+                    <div>
+                      <div class="flex justify-between items-center mb-1">
+                        <span class="text-slate-700 font-bold">Needs 50% (Makan & Operasional)</span>
+                        <span class="font-black text-emerald-600">${formatIDR(needsEst)}</span>
+                      </div>
+                      <div class="w-full bg-slate-200/80 h-2 rounded-full overflow-hidden">
+                        <div class="bg-emerald-500 h-full transition-all duration-300" style="width: 50%"></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="flex justify-between items-center mb-1">
+                        <span class="text-slate-700 font-bold">Wants 30% (Nongkrong & Hiburan)</span>
+                        <span class="font-black text-purple-600">${formatIDR(wantsEst)}</span>
+                      </div>
+                      <div class="w-full bg-slate-200/80 h-2 rounded-full overflow-hidden">
+                        <div class="bg-purple-500 h-full transition-all duration-300" style="width: 30%"></div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div class="flex justify-between items-center mb-1">
+                        <span class="text-slate-700 font-bold">Investment 20% (Tabungan Masa Depan)</span>
+                        <span class="font-black text-amber-600">${formatIDR(investEst)}</span>
+                      </div>
+                      <div class="w-full bg-slate-200/80 h-2 rounded-full overflow-hidden">
+                        <div class="bg-amber-500 h-full transition-all duration-300" style="width: 20%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button onclick="navigateTo('gostudent_fund')" class="w-full py-3.5 bg-gojek-green hover:bg-gojek-darkGreen text-white font-extrabold text-sm rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                  <span>Simpan & Lanjut ke Alokasi</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+
+              </div>
+            </div>
+          `;
+
+        // -------------------------------------------------------------
+        // SCREEN 3: R1 Raise - Balance Transfer Calculator (gostudent_fund)
+        // -------------------------------------------------------------
+        case 'gostudent_fund':
+          const amount = AppState.transferInput || 0;
+          const needsShare = amount * 0.50;
+          const wantsShare = amount * 0.30;
+          const investShare = amount * 0.20;
+          const isExceeding = AppState.transferSource === 'gopay' && amount > AppState.gopayMainBalance;
+
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-white px-4 py-3.5 border-b border-slate-200 flex items-center justify-between sticky top-0 z-10">
+                <button onclick="navigateTo('gostudent_profile')" class="p-1 rounded-full text-slate-600 hover:bg-slate-100">
+                  <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
+                <span class="font-extrabold text-sm text-slate-900">R1 Raise - Pemindahan Saldo</span>
+                <span class="w-6"></span>
+              </div>
+
+              <div class="p-4 flex flex-col gap-4">
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border border-slate-100 flex flex-col gap-2.5">
+                  <label class="text-xs font-extrabold text-slate-800">Sumber Dana Transfer</label>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button onclick="setTransferSource('gopay')" class="p-3 rounded-xl border text-left flex flex-col gap-1 transition ${
+                      AppState.transferSource === 'gopay' ? 'bg-emerald-50 border-gojek-green text-slate-900' : 'border-slate-200 text-slate-600'
+                    }">
+                      <span class="text-xs font-bold flex items-center gap-1">
+                        <i data-lucide="wallet" class="w-3.5 h-3.5 text-gopay-cyan"></i> GoPay Utama
+                      </span>
+                      <span class="text-[11px] text-slate-500 font-semibold">${formatIDR(AppState.gopayMainBalance)}</span>
+                    </button>
+
+                    <button onclick="setTransferSource('va')" class="p-3 rounded-xl border text-left flex flex-col gap-1 transition ${
+                      AppState.transferSource === 'va' ? 'bg-emerald-50 border-gojek-green text-slate-900' : 'border-slate-200 text-slate-600'
+                    }">
+                      <span class="text-xs font-bold flex items-center gap-1">
+                        <i data-lucide="building-2" class="w-3.5 h-3.5 text-sky-600"></i> Virtual Account
+                      </span>
+                      <span class="text-[11px] text-slate-500 font-semibold">BCA / Mandiri / Jago</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border border-slate-100 flex flex-col gap-3">
+                  <label class="text-xs font-extrabold text-slate-800">Nominal Pemindahan</label>
+                  <div class="relative">
+                    <span class="absolute left-3.5 top-3 font-black text-slate-400 text-sm">Rp</span>
+                    <input type="number" value="${AppState.transferInput}" oninput="updateTransferInput(this.value)" 
+                      class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 font-extrabold text-slate-900 text-base focus:outline-none focus:border-gojek-green">
+                  </div>
+                  
+                  ${isExceeding ? `
+                    <p class="text-[11px] font-bold text-rose-600 flex items-center gap-1">
+                      <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> Saldo GoPay Utama tidak mencukupi!
+                    </p>
+                  ` : ''}
+
+                  <div class="grid grid-cols-3 gap-2 pt-1">
+                    <button onclick="updateTransferInput(50000)" class="py-2 px-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700">Rp 50rb</button>
+                    <button onclick="updateTransferInput(100000)" class="py-2 px-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700">Rp 100rb</button>
+                    <button onclick="updateTransferInput(AppState.gopayMainBalance)" class="py-2 px-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-xs font-bold text-slate-700">Maksimal</button>
+                  </div>
+                </div>
+
+                <div class="bg-gojek-softMint border border-gojek-mintBorder rounded-2xl p-4 shadow-xs flex flex-col gap-3">
+                  <div class="flex items-center justify-between border-b border-gojek-mintBorder pb-2">
+                    <span class="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+                      <i data-lucide="calculator" class="w-4 h-4 text-gojek-green"></i> Live 3R Split Preview
+                    </span>
+                    <span class="text-[10px] font-bold text-gojek-green bg-white px-2 py-0.5 rounded-md border border-gojek-mintBorder">Otomatis Terbagi</span>
+                  </div>
+
+                  <div class="space-y-2 text-xs">
+                    <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200/80">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        <span class="text-slate-800 font-bold">Needs (50%)</span>
+                      </div>
+                      <span class="font-black text-emerald-600">+${formatIDR(needsShare)}</span>
+                    </div>
+
+                    <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200/80">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+                        <span class="text-slate-800 font-bold">Wants (30%)</span>
+                      </div>
+                      <span class="font-black text-purple-600">+${formatIDR(wantsShare)}</span>
+                    </div>
+
+                    <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-slate-200/80">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                        <span class="text-slate-800 font-bold">Investment (20%)</span>
+                      </div>
+                      <span class="font-black text-amber-600">+${formatIDR(investShare)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button onclick="confirmBalanceTransfer()" ${isExceeding || amount <= 0 ? 'disabled' : ''} 
+                  class="w-full py-3.5 bg-gojek-green hover:bg-gojek-darkGreen disabled:bg-slate-200 text-white font-extrabold text-sm rounded-2xl shadow-md transition flex items-center justify-center gap-2 ${getHotspotClass('confirm-transfer')}">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                  <span>Pindahkan & Bagi Saldo</span>
+                </button>
+
+              </div>
+            </div>
+          `;
+
+        // -------------------------------------------------------------
+        // SCREEN 4: R2 Retain - Pocket Hub (gostudent_dashboard)
+        // -------------------------------------------------------------
+        case 'gostudent_dashboard':
+          const n = AppState.pockets.needs;
+          const w = AppState.pockets.wants;
+          const i = AppState.pockets.invest;
+
+          const nPct = n.balance > 0 ? Math.min(100, Math.round((n.spent / (n.balance + n.spent)) * 100)) : 0;
+          const wPct = w.balance > 0 ? Math.min(100, Math.round((w.spent / (w.balance + w.spent)) * 100)) : 0;
+
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-gradient-to-b from-gojek-green to-emerald-700 px-4 pt-4 pb-6 text-white rounded-b-3xl shadow-xs flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <button onclick="navigateTo('gostudent_home')" class="p-1 rounded-full hover:bg-white/10">
+                      <i data-lucide="arrow-left" class="w-5 h-5 text-white"></i>
+                    </button>
+                    <span class="font-extrabold text-sm text-white">R2 Retain - Pocket Hub</span>
+                  </div>
+                  <button onclick="toggleBalancePrivacy()" class="p-1.5 bg-white/20 rounded-full hover:bg-white/30 transition">
+                    <i data-lucide="${AppState.balanceHidden ? 'eye-off' : 'eye'}" class="w-4 h-4 text-white"></i>
+                  </button>
+                </div>
+
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-xs text-emerald-100 font-medium">Total Saldo GoStudent</span>
+                  <span class="text-2xl font-black tracking-tight">
+                    ${AppState.balanceHidden ? '••••••••' : formatIDR(AppState.goStudentTotal)}
+                  </span>
+                </div>
+              </div>
+
+              <div class="p-4 flex flex-col gap-4">
+                
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border-l-4 border-emerald-500 border-t border-r border-b border-slate-100 flex flex-col gap-3">
+                  <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center border border-emerald-200">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-extrabold text-xs text-slate-900">Needs (Kebutuhan 50%)</h4>
+                        <p class="text-[10px] text-slate-500">Terpakai: ${formatIDR(n.spent)}</p>
+                      </div>
+                    </div>
+                    <span class="font-black text-sm text-emerald-600">${formatIDR(n.balance)}</span>
+                  </div>
+
+                  <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div class="bg-emerald-500 h-full transition-all duration-500" style="width: ${nPct}%"></div>
+                  </div>
+
+                  <button onclick="simulateSpend('needs', 20000, 'Makan Kantin')" class="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs rounded-xl border border-emerald-200 transition flex items-center justify-center gap-1.5 ${getHotspotClass('spend-needs')}">
+                    <i data-lucide="minus-circle" class="w-3.5 h-3.5"></i>
+                    <span>-Rp 20.000 Makan Kantin</span>
+                  </button>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border-l-4 border-purple-500 border-t border-r border-b border-slate-100 flex flex-col gap-3">
+                  <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center border border-purple-200">
+                        <i data-lucide="coffee" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-extrabold text-xs text-slate-900">Wants (Keinginan 30%)</h4>
+                        <p class="text-[10px] text-slate-500">Terpakai: ${formatIDR(w.spent)}</p>
+                      </div>
+                    </div>
+                    <span class="font-black text-sm text-purple-600">${formatIDR(w.balance)}</span>
+                  </div>
+
+                  <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div class="bg-purple-500 h-full transition-all duration-500" style="width: ${wPct}%"></div>
+                  </div>
+
+                  <button onclick="simulateSpend('wants', 15000, 'Beli Kopi')" class="w-full py-2 bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold text-xs rounded-xl border border-purple-200 transition flex items-center justify-center gap-1.5">
+                    <i data-lucide="minus-circle" class="w-3.5 h-3.5"></i>
+                    <span>-Rp 15.000 Beli Kopi</span>
+                  </button>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border-l-4 border-amber-500 border-t border-r border-b border-slate-100 flex flex-col gap-3">
+                  <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center border border-amber-200">
+                        <i data-lucide="trending-up" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-extrabold text-xs text-slate-900">Investment (Tabungan 20%)</h4>
+                        <p class="text-[10px] text-slate-500">Terkunci & Aman</p>
+                      </div>
+                    </div>
+                    <span class="font-black text-sm text-amber-600">${formatIDR(i.balance)}</span>
+                  </div>
+
+                  <button onclick="simulateTopUpInvestment(50000)" class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold text-xs rounded-xl border border-amber-200 transition flex items-center justify-center gap-1.5">
+                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                    <span>Setor Celengan (+Rp 50.000)</span>
+                  </button>
+                </div>
+
+                <div onclick="navigateTo('champoint_hub')" class="bg-champoint-warmLight border border-champoint-warmBorder rounded-2xl p-3.5 flex items-center justify-between cursor-pointer hover:bg-amber-100/80 transition">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-400 text-amber-950 flex items-center justify-center font-black text-xs shrink-0">
+                      🔥
+                    </div>
+                    <div>
+                      <h5 class="font-extrabold text-xs text-slate-900">Streak ke-31 Hari Ini</h5>
+                      <p class="text-[10px] text-slate-600">Selesaikan misi harian untuk 2x poin!</p>
+                    </div>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-amber-600"></i>
+                </div>
+
+                <button onclick="navigateTo('gostudent_reallocate')" class="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-sm rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                  <span>Evaluasi Konsistensi Bulanan (R3)</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-400"></i>
+                </button>
+
+              </div>
+            </div>
+          `;
+
+        // -------------------------------------------------------------
+        // SCREEN 5: R3 Reallocate (gostudent_reallocate)
+        // -------------------------------------------------------------
+        case 'gostudent_reallocate':
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-white px-4 py-3.5 border-b border-slate-200 flex items-center justify-between sticky top-0 z-10">
+                <button onclick="navigateTo('gostudent_dashboard')" class="p-1 rounded-full text-slate-600 hover:bg-slate-100">
+                  <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
+                <span class="font-extrabold text-sm text-slate-900">R3 Reallocate - Streak Bonus</span>
+                <span class="w-6"></span>
+              </div>
+
+              <div class="p-4 flex flex-col gap-4">
+                
+                <div class="bg-gradient-to-br from-amber-400 to-amber-500 text-slate-950 rounded-2xl p-4 shadow-md flex flex-col items-center text-center gap-2 border border-amber-300">
+                  <div class="w-12 h-12 rounded-full bg-white/30 backdrop-blur-xs flex items-center justify-center text-2xl shadow-inner mb-1">
+                    🏆
+                  </div>
+                  <h3 class="font-black text-base leading-tight">Hebat! Kamu Disiplin Bulan Ini</h3>
+                  <p class="text-xs font-medium text-slate-900 max-w-[260px]">
+                    Pengelolaan kantong 3R berjalan lancar. Multiplier 2x poin kompetisi aktif!
+                  </p>
+                  <span class="mt-1 bg-slate-900 text-amber-300 font-extrabold text-[11px] px-3 py-1 rounded-full border border-amber-400/40">
+                    2x Point Multiplier Active
+                  </span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card border border-slate-100 flex flex-col gap-3">
+                  <h4 class="font-extrabold text-xs text-slate-800 uppercase tracking-wider">Laporan Kebiasaan Bulanan</h4>
+                  
+                  <div class="space-y-2 text-xs">
+                    <div class="flex items-center justify-between p-2.5 bg-emerald-50 rounded-xl border border-gojek-mintBorder">
+                      <div class="flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-gojek-green"></i>
+                        <span class="font-bold text-slate-800">Disiplin alokasi awal bulan</span>
+                      </div>
+                      <span class="font-black text-gojek-green">+100 pts</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-2.5 bg-emerald-50 rounded-xl border border-gojek-mintBorder">
+                      <div class="flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-gojek-green"></i>
+                        <span class="font-bold text-slate-800">Pengeluaran Wants &lt; 30%</span>
+                      </div>
+                      <span class="font-black text-gojek-green">+150 pts</span>
+                    </div>
+
+                    <div class="flex items-center justify-between p-2.5 bg-emerald-50 rounded-xl border border-gojek-mintBorder">
+                      <div class="flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-gojek-green"></i>
+                        <span class="font-bold text-slate-800">Tabungan investasi tidak ditarik</span>
+                      </div>
+                      <span class="font-black text-gojek-green">+150 pts</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button onclick="claimReallocateBonus()" ${AppState.campaign.reallocateClaimed ? 'disabled' : ''}
+                  class="w-full py-3.5 bg-amber-400 hover:bg-amber-300 disabled:bg-slate-200 text-slate-950 font-black text-sm rounded-2xl shadow-md transition flex items-center justify-center gap-2 ${getHotspotClass('claim-bonus')}">
+                  <i data-lucide="gift" class="w-5 h-5"></i>
+                  <span>${AppState.campaign.reallocateClaimed ? 'Poin Sudah Diklaim (+400)' : 'Klaim Bonus Poin (+400 Pts)'}</span>
+                </button>
+
+                <button onclick="navigateTo('gostudent_rewards')" class="w-full py-3.5 bg-gojek-green hover:bg-gojek-darkGreen text-white font-extrabold text-sm rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                  <span>Tukarkan Poin di Reward Center</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+
+              </div>
+            </div>
+          `;
+
+        // -------------------------------------------------------------
+        // SCREEN 6: Rewards Center (`gostudent_rewards`)
+        // -------------------------------------------------------------
+        case 'gostudent_rewards':
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-gradient-to-r from-amber-400 to-amber-500 px-4 pt-4 pb-6 text-slate-950 rounded-b-3xl shadow-xs flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                  <button onclick="navigateTo('gostudent_home')" class="p-1 rounded-full hover:bg-black/10">
+                    <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950"></i>
+                  </button>
+                  <span class="font-extrabold text-sm text-slate-950">Rewards & Benefit Mahasiswa</span>
+                  <span class="w-6"></span>
+                </div>
+
+                <div class="flex items-center justify-between bg-slate-900 text-white rounded-2xl p-3.5 shadow-md border border-amber-300/30">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold">
+                      <i data-lucide="star" class="w-5 h-5 fill-slate-950"></i>
+                    </div>
+                    <div>
+                      <span class="text-[10px] text-slate-400 font-medium">Poin GoStudent Kamu</span>
+                      <h3 class="text-xl font-black text-amber-300 leading-tight">${AppState.campaign.points} pts</h3>
+                    </div>
+                  </div>
+                  <button onclick="navigateTo('champoint_hub')" class="text-xs font-bold bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl hover:bg-amber-300 transition">
+                    + Cari Poin
+                  </button>
+                </div>
+              </div>
+
+              <div class="p-4 flex flex-col gap-4">
+                
+                <h4 class="font-extrabold text-xs text-slate-800 uppercase tracking-wider">Katalog Voucher Eksklusif</h4>
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card flex items-center justify-between border border-slate-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold border border-rose-200">
+                      <i data-lucide="utensils" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h5 class="font-extrabold text-xs text-slate-900">Diskon GoFood Rp 15.000</h5>
+                      <p class="text-[10px] text-slate-500 mt-0.5">Biaya: <span class="font-bold text-amber-600">150 pts</span></p>
+                    </div>
+                  </div>
+
+                  <button onclick="redeemVoucher('v1', 150, 'Diskon GoFood Rp 15.000')" 
+                    ${AppState.campaign.points < 150 ? 'disabled' : ''}
+                    class="py-2 px-3.5 bg-gojek-green hover:bg-gojek-darkGreen disabled:bg-slate-200 text-white font-extrabold text-xs rounded-xl shadow-xs transition ${getHotspotClass('redeem-voucher')}">
+                    Tukar Poin
+                  </button>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow-gojek-card flex items-center justify-between border border-slate-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-gojek-green flex items-center justify-center font-bold border border-gojek-mintBorder">
+                      <i data-lucide="bike" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h5 class="font-extrabold text-xs text-slate-900">Potongan GoRide Kampus Rp 10.000</h5>
+                      <p class="text-[10px] text-slate-500 mt-0.5">Biaya: <span class="font-bold text-amber-600">100 pts</span></p>
+                    </div>
+                  </div>
+
+                  <button onclick="redeemVoucher('v2', 100, 'Potongan GoRide Kampus Rp 10.000')" 
+                    ${AppState.campaign.points < 100 ? 'disabled' : ''}
+                    class="py-2 px-3.5 bg-gojek-green hover:bg-gojek-darkGreen disabled:bg-slate-200 text-white font-extrabold text-xs rounded-xl shadow-xs transition">
+                    Tukar Poin
+                  </button>
+                </div>
+
+                <div class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl p-4 shadow-md flex flex-col gap-2 border border-emerald-500/30">
+                  <div class="flex items-center gap-2">
+                    <i data-lucide="award" class="w-5 h-5 text-amber-400"></i>
+                    <span class="text-xs font-extrabold text-amber-300 uppercase tracking-wider">Program Unggulan</span>
+                  </div>
+                  <h4 class="font-black text-sm leading-tight">Top 3 Mahasiswa Terpilih Menjadi Gojek Campus Ambassador 2026</h4>
+                  <p class="text-[11px] text-slate-300 leading-relaxed">
+                    Dapatkan beasiswa penuh, mentoring executive, dan networking nasional.
+                  </p>
+                  <button onclick="openAmbassadorModal()" class="mt-1 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs rounded-xl transition flex items-center justify-center gap-1.5">
+                    <span>Lihat Syarat & Ketentuan Ambassador</span>
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          `;
+
+        // -------------------------------------------------------------
+        // SCREEN A: Champointship Mission Hub (champoint_hub)
+        // -------------------------------------------------------------
+        case 'champoint_hub':
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-gradient-to-b from-gojek-green to-emerald-800 px-4 pt-4 pb-6 text-white rounded-b-3xl shadow-xs flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                  <button onclick="navigateTo('gostudent_home')" class="p-1 rounded-full hover:bg-white/10">
+                    <i data-lucide="arrow-left" class="w-5 h-5 text-white"></i>
+                  </button>
+                  <span class="font-black text-xs uppercase tracking-wider text-amber-300">Gojek Champointship 2026</span>
+                  <span class="w-6"></span>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-xs rounded-2xl p-3.5 border border-white/20 flex items-center justify-between">
+                  <div>
+                    <h3 class="font-black text-sm text-white">${AppState.campaign.studentId}</h3>
+                    <p class="text-[11px] text-emerald-100 flex items-center gap-1 mt-0.5">
+                      <i data-lucide="map-pin" class="w-3 h-3 text-amber-300"></i> ${AppState.campaign.campus}
+                    </p>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-[10px] text-emerald-200 font-medium">Poin Kamu</span>
+                    <div class="text-lg font-black text-amber-300">${AppState.campaign.points} pts</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 flex flex-col gap-4">
+                
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 flex items-start gap-2.5 text-xs text-amber-900">
+                  <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></i>
+                  <div>
+                    <span class="font-bold">PERHATIAN:</span> Titik lokasi terkunci di <b>Universitas Indonesia</b> untuk penghitungan leaderboard nasional.
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-1 bg-slate-200/70 p-1 rounded-xl text-xs font-bold text-slate-600">
+                  <button class="py-1.5 bg-white text-slate-900 rounded-lg shadow-xs text-center">Harian</button>
+                  <button class="py-1.5 hover:text-slate-900 text-center">Mingguan</button>
+                  <button class="py-1.5 hover:text-slate-900 text-center">Bulanan</button>
+                </div>
+
+                <div class="flex flex-col gap-3">
+                  <div class="bg-white rounded-2xl p-3.5 shadow-gojek-card flex items-center justify-between border border-slate-100">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-xl bg-emerald-50 text-gojek-green flex items-center justify-center border border-gojek-mintBorder shrink-0">
+                        <i data-lucide="bike" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-extrabold text-xs text-slate-900">${AppState.campaign.missions[0].title}</h4>
+                        <span class="text-[10px] font-bold text-amber-600">+${AppState.campaign.missions[0].reward} Points</span>
+                      </div>
+                    </div>
+                    <button onclick="completeMission('m1')" ${AppState.campaign.missions[0].done ? 'disabled' : ''}
+                      class="py-1.5 px-3 bg-gojek-green hover:bg-gojek-darkGreen disabled:bg-slate-200 text-white font-extrabold text-xs rounded-xl transition">
+                      ${AppState.campaign.missions[0].done ? 'Selesai ✔' : 'Lakukan'}
+                    </button>
+                  </div>
+
+                  <div class="bg-white rounded-2xl p-3.5 shadow-gojek-card flex items-center justify-between border border-slate-100">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-xl bg-gopay-cyanTint text-gopay-cyan flex items-center justify-center border border-gopay-cyanBorder shrink-0">
+                        <i data-lucide="wallet" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-extrabold text-xs text-slate-900">${AppState.campaign.missions[1].title}</h4>
+                        <span class="text-[10px] font-bold text-amber-600">+${AppState.campaign.missions[1].reward} Points</span>
+                      </div>
+                    </div>
+                    <button onclick="navigateTo('gostudent_fund')" class="py-1.5 px-3 bg-gopay-cyan hover:bg-gopay-darkBlue text-white font-extrabold text-xs rounded-xl transition">
+                      ${AppState.campaign.missions[1].done ? 'Selesai ✔' : 'Pindah Dana'}
+                    </button>
+                  </div>
+                </div>
+
+                <div onclick="navigateTo('champoint_game')" class="bg-gradient-to-r from-purple-600 to-indigo-700 text-white rounded-2xl p-4 shadow-md cursor-pointer hover:shadow-lg transition flex items-center justify-between ${getHotspotClass('play-game')}">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-lg font-black">
+                      🧩
+                    </div>
+                    <div>
+                      <h4 class="font-extrabold text-xs text-white">Yuk, Asah Otak Finansial!</h4>
+                      <p class="text-[10px] text-purple-200">Mainkan "Tata Kata Edukasi" & dapatkan +20 poin</p>
+                    </div>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-5 h-5 text-purple-200"></i>
+                </div>
+
+                <button onclick="navigateTo('champoint_leaderboard')" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                  <i data-lucide="trophy" class="w-4 h-4 text-amber-400"></i>
+                  <span>Lihat Leaderboard Nasional Kampus</span>
+                </button>
+
+              </div>
+            </div>
+          `;
+
+        // -------------------------------------------------------------
+        // SCREEN B: Mini-Game Tata Kata Edukasi (champoint_game)
+        // -------------------------------------------------------------
+        case 'champoint_game':
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-white px-4 py-3.5 border-b border-slate-200 flex items-center justify-between sticky top-0 z-10">
+                <button onclick="navigateTo('champoint_hub')" class="p-1 rounded-full text-slate-600 hover:bg-slate-100">
+                  <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
+                <span class="font-extrabold text-sm text-slate-900">Mini-Game: Tata Kata Edukasi</span>
+                <span class="w-6"></span>
+              </div>
+
+              <div class="p-4 flex flex-col gap-5 items-center justify-center flex-1">
+                
+                <div class="bg-white rounded-3xl p-5 shadow-gojek-card border border-amber-200 text-center w-full flex flex-col items-center gap-3">
+                  <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-black border border-amber-200">
+                    🧩
+                  </div>
+                  <h3 class="font-extrabold text-base text-slate-900">Susun Kata Literasi Keuangan</h3>
+                  <p class="text-xs text-slate-600 leading-relaxed">
+                    Susun ubin huruf untuk membentuk kata kunci finansial sehat mahasiswa.
+                  </p>
+                  <span class="bg-amber-100 text-amber-900 font-extrabold text-[11px] px-3 py-1 rounded-full border border-amber-200">
+                    Hadiah: +20 Poin Kompetisi
+                  </span>
+                </div>
+
+                <div class="flex gap-2 my-2">
+                  ${[0, 1, 2, 3, 4].map(idx => {
+                    const letter = AppState.selectedLetters[idx] || '';
+                    return `
+                      <div class="w-11 h-12 rounded-xl border-2 ${letter ? 'border-gojek-green bg-emerald-50 text-gojek-green font-black' : 'border-slate-300 bg-white'} flex items-center justify-center text-lg shadow-xs">
+                        ${letter}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+
+                <div class="flex gap-2">
+                  ${['H', 'E', 'M', 'A', 'T'].map((letter, idx) => {
+                    const isUsed = AppState.selectedLetters.includes(letter);
+                    const isTarget = letter === 'H';
+                    return `
+                      <button onclick="selectGameLetter('${letter}')" ${isUsed || AppState.gameSolved ? 'disabled' : ''}
+                        class="w-11 h-12 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:bg-slate-200 text-white font-extrabold text-lg shadow-md transition transform active:scale-95 ${isTarget ? getHotspotClass('tile-H') : ''}">
+                        ${letter}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+
+                <div class="flex gap-3 w-full mt-2">
+                  <button onclick="resetGameLetters()" class="flex-1 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition">
+                    Ulangi Kata
+                  </button>
+                  <button onclick="submitGameAnswer()" ${AppState.gameSolved || AppState.selectedLetters.length < 5 ? 'disabled' : ''}
+                    class="flex-1 py-2.5 bg-gojek-green hover:bg-gojek-darkGreen disabled:bg-slate-200 text-white font-extrabold text-xs rounded-xl transition">
+                    ${AppState.gameSolved ? 'Sudah Selesai' : 'Kirim Jawaban'}
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          `;
+
+        // -------------------------------------------------------------
+        // SCREEN C: Leaderboard Nasional (champoint_leaderboard)
+        // -------------------------------------------------------------
+        case 'champoint_leaderboard':
+          return `
+            <div class="screen-fade-enter flex flex-col flex-1 pb-20 bg-slate-50 relative">
+              <div class="bg-slate-900 px-4 pt-4 pb-6 text-white rounded-b-3xl shadow-xs flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                  <button onclick="navigateTo('champoint_hub')" class="p-1 rounded-full hover:bg-white/10">
+                    <i data-lucide="arrow-left" class="w-5 h-5 text-white"></i>
+                  </button>
+                  <span class="font-extrabold text-sm text-white">Leaderboard Nasional Kampus</span>
+                  <span class="w-6"></span>
+                </div>
+
+                <div class="flex justify-center items-end gap-3 pt-2 pb-1">
+                  <div class="flex flex-col items-center gap-1">
+                    <div class="w-10 h-10 rounded-full bg-slate-300 text-slate-900 font-bold flex items-center justify-center border-2 border-slate-100 text-xs">
+                      ITB
+                    </div>
+                    <span class="text-[10px] text-slate-300 font-semibold">Bima K.</span>
+                    <div class="w-16 h-16 bg-slate-700 rounded-t-xl flex flex-col items-center justify-center text-xs font-black text-slate-200">
+                      <span>#2</span>
+                      <span class="text-[9px] font-normal text-slate-400">1.820 pts</span>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1">
+                    <div class="w-12 h-12 rounded-full bg-amber-400 text-slate-950 font-black flex items-center justify-center border-2 border-amber-300 text-sm shadow-md">
+                      UGM
+                    </div>
+                    <span class="text-[11px] text-amber-300 font-bold">Nabila P.</span>
+                    <div class="w-20 h-24 bg-gradient-to-t from-amber-500 to-amber-400 text-slate-950 rounded-t-xl flex flex-col items-center justify-center text-sm font-black shadow-md">
+                      <span>👑 #1</span>
+                      <span class="text-[10px] font-extrabold text-slate-900">2.450 pts</span>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col items-center gap-1">
+                    <div class="w-10 h-10 rounded-full bg-amber-800 text-amber-100 font-bold flex items-center justify-center border-2 border-amber-700 text-xs">
+                      UNAIR
+                    </div>
+                    <span class="text-[10px] text-slate-300 font-semibold">Rian S.</span>
+                    <div class="w-16 h-12 bg-slate-800 rounded-t-xl flex flex-col items-center justify-center text-xs font-black text-amber-500">
+                      <span>#3</span>
+                      <span class="text-[9px] font-normal text-slate-400">1.640 pts</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 flex flex-col gap-3">
+                <h4 class="font-extrabold text-xs text-slate-800 uppercase tracking-wider">Peringkat Teratas</h4>
+
+                <div class="space-y-2">
+                  <div class="bg-white p-3 rounded-2xl shadow-gojek-card flex items-center justify-between border border-slate-100 text-xs">
+                    <div class="flex items-center gap-3">
+                      <span class="font-black text-slate-400 w-4 text-center">4</span>
+                      <div class="w-8 h-8 rounded-full bg-slate-100 font-bold text-slate-700 flex items-center justify-center text-[10px]">ITS</div>
+                      <div>
+                        <h5 class="font-bold text-slate-900">Dimas Pratama</h5>
+                        <p class="text-[10px] text-slate-500">Institut Teknologi Sepuluh Nopember</p>
+                      </div>
+                    </div>
+                    <span class="font-bold text-slate-900">1.510 pts</span>
+                  </div>
+
+                  <div class="bg-white p-3 rounded-2xl shadow-gojek-card flex items-center justify-between border border-slate-100 text-xs">
+                    <div class="flex items-center gap-3">
+                      <span class="font-black text-slate-400 w-4 text-center">5</span>
+                      <div class="w-8 h-8 rounded-full bg-slate-100 font-bold text-slate-700 flex items-center justify-center text-[10px]">UNDIP</div>
+                      <div>
+                        <h5 class="font-bold text-slate-900">Siti Rahma</h5>
+                        <p class="text-[10px] text-slate-500">Universitas Diponegoro</p>
+                      </div>
+                    </div>
+                    <span class="font-bold text-slate-900">1.480 pts</span>
+                  </div>
+                </div>
+
+                <button onclick="openShareModal()" class="mt-2 w-full py-3 bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-extrabold text-xs rounded-2xl shadow-md transition flex items-center justify-center gap-2 ${getHotspotClass('share-story')}">
+                  <i data-lucide="instagram" class="w-4 h-4"></i>
+                  <span>Bagikan ke Instagram Story</span>
+                </button>
+
+              </div>
+
+              <!-- Sticky Bottom Bar -->
+              <div class="absolute bottom-0 left-0 right-0 bg-slate-900 text-white p-3.5 border-t border-slate-800 flex items-center justify-between z-20">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-gojek-green text-white font-black flex items-center justify-center text-xs">
+                    12
+                  </div>
+                  <div>
+                    <h5 class="font-bold text-xs text-white">Kamu (Universitas Indonesia)</h5>
+                    <p class="text-[10px] text-emerald-400 font-semibold">${AppState.campaign.points} pts • Peringkat #12</p>
+                  </div>
+                </div>
+                <button onclick="navigateTo('champoint_hub')" class="text-xs font-extrabold bg-emerald-500 text-slate-950 px-3 py-1.5 rounded-xl hover:bg-emerald-400 transition">
+                  Tingkatkan
+                </button>
+              </div>
+
+            </div>
+          `;
+
+        default:
+          return `<div class="p-6 text-center text-slate-500">Screen not found</div>`;
+      }
+    }
+
+    // STATE MUTATORS
+    function updateProfile(key, val) {
+      AppState.profile[key] = val;
+      renderApp();
+    }
+
+    function updateProfileBudget(val) {
+      AppState.profile.monthlyBudget = parseInt(val);
+      renderApp();
+    }
+
+    function setTransferSource(src) {
+      AppState.transferSource = src;
+      renderApp();
+    }
+
+    function updateTransferInput(val) {
+      AppState.transferInput = parseInt(val) || 0;
+      renderApp();
+    }
+
+    function confirmBalanceTransfer() {
+      const amt = AppState.transferInput;
+      if (amt <= 0) return;
+
+      if (AppState.transferSource === 'gopay') {
+        if (amt > AppState.gopayMainBalance) {
+          showToast("Saldo GoPay tidak mencukupi!", "error");
+          return;
+        }
+        AppState.gopayMainBalance -= amt;
+      }
+
+      AppState.goStudentTotal += amt;
+      AppState.pockets.needs.balance += amt * 0.50;
+      AppState.pockets.wants.balance += amt * 0.30;
+      AppState.pockets.invest.balance += amt * 0.20;
+
+      const m2 = AppState.campaign.missions.find(m => m.id === 'm2');
+      if (m2 && !m2.done) {
+        m2.done = true;
+        AppState.campaign.points += m2.reward;
+        showToast(`Misi Mingguan Selesai! +${m2.reward} Poin Bonus!`, 'success');
+      } else {
+        showToast(`Berhasil memindahkan ${formatIDR(amt)} ke GoStudent`, 'success');
+      }
+
+      navigateTo('gostudent_dashboard');
+    }
+
+    function toggleBalancePrivacy() {
+      AppState.balanceHidden = !AppState.balanceHidden;
+      renderApp();
+    }
+
+    function simulateSpend(pocketKey, amount, itemName) {
+      const p = AppState.pockets[pocketKey];
+      if (p.balance >= amount) {
+        p.balance -= amount;
+        p.spent += amount;
+        AppState.goStudentTotal -= amount;
+        showToast(`Pengeluaran ${itemName} (${formatIDR(amount)}) dicatat`, 'success');
+      } else {
+        showToast(`Saldo ${p.label} tidak mencukupi`, 'error');
+      }
+      renderApp();
+    }
+
+    function simulateTopUpInvestment(amount) {
+      AppState.pockets.invest.balance += amount;
+      AppState.goStudentTotal += amount;
+      showToast(`Berhasil setor celengan ${formatIDR(amount)}`, 'success');
+      renderApp();
+    }
+
+    function claimReallocateBonus() {
+      if (AppState.campaign.reallocateClaimed) return;
+      AppState.campaign.reallocateClaimed = true;
+      AppState.campaign.points += 400;
+
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+      showToast("Selamat! +400 Poin Konsistensi Diklaim!", "success");
+      renderApp();
+    }
+
+    function redeemVoucher(vId, cost, title) {
+      if (AppState.campaign.points >= cost) {
+        AppState.campaign.points -= cost;
+        const v = AppState.campaign.vouchers.find(item => item.id === vId);
+        if (v) v.claimed = true;
+
+        showToast(`Voucher ${title} Ditukarkan!`, 'success');
+
+        openModal(`
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-gojek-mintBorder text-gojek-green flex items-center justify-center">
+              <i data-lucide="ticket" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-extrabold text-base text-slate-900">${title}</h3>
+            <p class="text-xs text-slate-500">Tunjukkan barcode ini kepada kasir / driver Gojek.</p>
+
+            <div class="w-full bg-slate-900 p-4 rounded-2xl flex flex-col items-center gap-2 my-1">
+              <div class="flex gap-1 h-12 items-center">
+                ${Array(24).fill(0).map(() => `<div class="bg-white h-full" style="width:${Math.floor(Math.random()*4)+1}px"></div>`).join('')}
+              </div>
+              <span class="text-[10px] text-amber-400 font-mono tracking-widest">GOSTUDENT-${vId.toUpperCase()}-2026</span>
+            </div>
+
+            <button onclick="closeModal()" class="w-full py-2.5 bg-gojek-green text-white font-extrabold text-xs rounded-xl">
+              Tutup & Simpan di Promo
+            </button>
+          </div>
+        `);
+      } else {
+        showToast("Poin kamu tidak mencukupi!", "error");
+      }
+      renderApp();
+    }
+
+    function completeMission(mId) {
+      const m = AppState.campaign.missions.find(item => item.id === mId);
+      if (m && !m.done) {
+        m.done = true;
+        AppState.campaign.points += m.reward;
+        showToast(`Misi "${m.title}" Selesai! +${m.reward} Poin!`, 'success');
+        renderApp();
+      }
+    }
+
+    function selectGameLetter(letter) {
+      if (AppState.selectedLetters.length < 5) {
+        AppState.selectedLetters.push(letter);
+        renderApp();
+      }
+    }
+
+    function resetGameLetters() {
+      AppState.selectedLetters = [];
+      AppState.gameSolved = false;
+      renderApp();
+    }
+
+    function submitGameAnswer() {
+      const word = AppState.selectedLetters.join('');
+      if (word === 'HEMAT') {
+        AppState.gameSolved = true;
+        AppState.campaign.points += 20;
+        confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
+        showToast("Jawaban Benar! Kamu dapat +20 Poin!", "success");
+      } else {
+        showToast("Jawaban kurang tepat. Coba susun H-E-M-A-T", "error");
+      }
+      renderApp();
+    }
+
+    function openModal(contentHTML) {
+      document.getElementById('modalContent').innerHTML = contentHTML;
+      document.getElementById('modalOverlay').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.add('hidden');
+    }
+
+    function openAmbassadorModal() {
+      openModal(`
+        <div class="flex flex-col text-left gap-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="award" class="w-5 h-5 text-amber-500"></i>
+            <h3 class="font-extrabold text-sm text-slate-900">Syarat Campus Ambassador 2026</h3>
+          </div>
+          <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
+            <li>Mahasiswa aktif D3/D4/S1 di Indonesia.</li>
+            <li>Masuk Top 3 Leaderboard Gojek Champointship.</li>
+            <li>Memiliki rasio konsistensi 3R min 85%.</li>
+          </ul>
+          <button onclick="closeModal()" class="mt-2 w-full py-2.5 bg-gojek-green text-white font-extrabold text-xs rounded-xl">
+            Mengerti
+          </button>
+        </div>
+      `);
+    }
+
+    function openShareModal() {
+      openModal(`
+        <div class="flex flex-col items-center text-center gap-3">
+          <div class="w-full bg-gradient-to-tr from-purple-600 via-pink-600 to-amber-500 p-4 rounded-2xl text-white shadow-md flex flex-col gap-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider opacity-80">Gojek Champointship 2026</span>
+            <h4 class="font-black text-sm">Peringkat #12 Nasional</h4>
+            <p class="text-xs">Universitas Indonesia • ${AppState.campaign.points} Pts</p>
+          </div>
+          <p class="text-xs text-slate-500">Preview untuk dibagikan ke Instagram Story.</p>
+          <button onclick="showToast('Story berhasil dibagikan!', 'success'); closeModal();" class="w-full py-2.5 bg-slate-900 text-white font-extrabold text-xs rounded-xl">
+            Bagikan Sekarang
+          </button>
+        </div>
+      `);
+    }
+
+    // Launch App
+    document.addEventListener('DOMContentLoaded', () => {
+      renderApp();
+    });
+  </script>
+
+</body>
+</html>
